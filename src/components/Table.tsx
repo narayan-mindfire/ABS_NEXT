@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppContext } from "../context/app.context";
-import type { Appointment } from "../types";
-import { sortAppointments } from "../logic/app.logic";
+import type { Appointment } from "../types/stateTypes";
+import { sortAppointments } from "@/utils/sortAppointments";
 import { useAppointmentActions } from "../hooks/useAppointmentActions";
 import Button from "./Button";
 

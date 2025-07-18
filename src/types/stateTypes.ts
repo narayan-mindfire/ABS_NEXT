@@ -29,7 +29,6 @@ export interface State {
   sortAppointmentsBy: SortAppointmentsBy;
   isGridSelected: IsGridSelected;
   appointments: Appointment[];
-  formFields?: Omit<Appointment, "id" | "email"> | null;
   userType: "doctor" | "patient" | "admin" | null;
   token: string | null;
   userName: string | null;

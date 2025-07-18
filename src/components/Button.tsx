@@ -15,8 +15,9 @@ const Button: FC<ButtonProps> = ({
   disabled = false,
   ...props
 }) => {
-  const baseStyles =
-    "px-4 py-2 text-sm font-medium rounded transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black";
+  const baseStyles = ` ${
+    disabled ? "opacity-50 cursor-not-allowed" : ""
+  } px-4 py-2 text-sm font-medium rounded transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`;
 
   const variants = {
     default: "bg-black text-white border border-black hover:bg-gray-800",

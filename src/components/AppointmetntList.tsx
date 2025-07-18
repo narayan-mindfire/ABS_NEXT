@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import AppointmentCards from "./AppointmentCards";
 import Table from "./Table";
-// import { useAppContext } from "../context/app.context";
+import { useAppContext } from "../context/app.context";
 
 const AppointmentList = () => {
   const { state, setState } = useAppContext();

@@ -1,3 +1,4 @@
+import { AppProvider } from "@/context/app.context";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,7 +9,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className="min-h-screen flex flex-col">
-        <main className="flex-grow">{children}</main>
+        <AppProvider>
+          <main className="flex-grow">{children}</main>
+        </AppProvider>
 
         <footer className="text-center text-xs text-gray-500 py-6 border-t border-gray-200">
           © 2025 ABS. All rights reserved.

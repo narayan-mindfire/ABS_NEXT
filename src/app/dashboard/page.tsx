@@ -6,6 +6,7 @@ import UserMenu from "@/components/UserMenu";
 import Button from "@/components/Button";
 import AppointmentModal from "@/components/AppointmentModal";
 import AppointmentList from "@/components/AppointmetntList";
+import { useAppContext } from "@/context/app.context";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,8 @@ const Dashboard = () => {
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [showModal, setShowModal] = useState(false);
-  let userType = "doctor";
+  const { state } = useAppContext();
+  const userType = state.userType;
 
   useEffect(() => {
     const dummyAppointments = [
@@ -124,7 +126,7 @@ const Dashboard = () => {
           <Button
             onClick={() => setShowModal(true)}
             variant="default"
-            className="h-10"
+            className="h-14 md:h-10 lg:10"
           >
             + Create Appointment
           </Button>
@@ -137,8 +139,7 @@ const Dashboard = () => {
       ) : appointments.length === 0 ? (
         <p className="text-gray-500">No appointments found.</p>
       ) : (
-        // <AppointmentList appointments={appointments} user={userType} />
-        <></>
+        <AppointmentList />
       )}
 
       {/* Modal */}
