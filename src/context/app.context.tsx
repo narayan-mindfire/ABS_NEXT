@@ -3,6 +3,7 @@ import {
   createContext,
   useContext,
   useState,
+  useEffect,
   type ReactNode,
   type JSX,
 } from "react";
@@ -10,13 +11,12 @@ import { loadData, saveData } from "../storage/app.storage";
 import type { State } from "../types/stateTypes";
 
 const defaultState: State = {
-  appointments: loadData("appointments", []),
-  isGridSelected: loadData("isGridSelected", true),
+  appointments: [],
+  isGridSelected: true,
   editingAppointmentId: null,
-  sortAppointmentsBy: loadData("sortAppointmentsBy", null),
-  userType: loadData("userType", "patient"),
-  token: loadData("token", null),
-  userName: loadData("userName", null),
+  sortAppointmentsBy: null,
+  userType: null,
+  userName: null,
 };
 
 interface AppContextType {
@@ -32,6 +32,19 @@ export function AppProvider({
   children: ReactNode;
 }): JSX.Element {
   const [state, setInternalState] = useState<State>(defaultState);
+
+  // 🟡 Load from localStorage only after client-side mount
+  useEffect(() => {
+    const hydratedState: State = {
+      appointments: loadData("appointments", []),
+      isGridSelected: loadData("isGridSelected", true),
+      editingAppointmentId: null,
+      sortAppointmentsBy: loadData("sortAppointmentsBy", null),
+      userType: loadData("userType", null),
+      userName: loadData("userName", null),
+    };
+    setInternalState(hydratedState);
+  }, []);
 
   const setState = <K extends keyof State>(key: K, value: State[K]) => {
     setInternalState((prev) => {

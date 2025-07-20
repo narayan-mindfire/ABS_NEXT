@@ -2,19 +2,22 @@
 import type { Appointment } from "../types/stateTypes";
 import { useAppointmentActions } from "../hooks/useAppointmentActions";
 import Button from "./Button";
-import { useAppContext } from "../context/app.context";
 import { isOld } from "../utils/isOld";
 
 interface CardProps {
   app: Appointment;
   isEditing?: boolean;
   readonly: boolean;
+  userType: "patient" | "doctor" | "admin" | null;
 }
 
-const AppointmentCard: React.FC<CardProps> = ({ app, isEditing, readonly }) => {
+const AppointmentCard: React.FC<CardProps> = ({
+  app,
+  isEditing,
+  readonly,
+  userType,
+}) => {
   const { deleteAppointment, editAppointment, modal } = useAppointmentActions();
-  const { state } = useAppContext();
-  const user = state.userType;
   return (
     <>
       <div
@@ -23,7 +26,7 @@ const AppointmentCard: React.FC<CardProps> = ({ app, isEditing, readonly }) => {
         }`}
       >
         <div className="mb-4">
-          {(user === "admin" || user === "doctor") && (
+          {(userType === "admin" || userType === "doctor") && (
             <h3
               title="patient name"
               className="text-2xl font-bold text-black mt-0"
@@ -31,7 +34,7 @@ const AppointmentCard: React.FC<CardProps> = ({ app, isEditing, readonly }) => {
               {app.name}
             </h3>
           )}
-          {(user === "admin" || user === "patient") && (
+          {(userType === "admin" || userType === "patient") && (
             <p title="doctor" className="text-15 font-normal text-gray-700 m-0">
               <span className="font-semibold text-black">
                 <i className="fa-solid fa-stethoscope mr-1"></i> {app.doctor}

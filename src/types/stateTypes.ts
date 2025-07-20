@@ -30,7 +30,6 @@ export interface State {
   isGridSelected: IsGridSelected;
   appointments: Appointment[];
   userType: "doctor" | "patient" | "admin" | null;
-  token: string | null;
   userName: string | null;
 }
 

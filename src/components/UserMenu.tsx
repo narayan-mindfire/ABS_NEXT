@@ -9,11 +9,8 @@ import {
   faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-
-const dummyUser = {
-  userType: "doctor",
-  userName: "Narayan",
-};
+import { useAppContext } from "@/context/app.context";
+import { logout } from "@/app/lib/logout";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
@@ -28,19 +25,14 @@ const UserMenu = () => {
       setOpen(false);
     }
   };
+  const { state } = useAppContext();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const icon = dummyUser.userType === "patient" ? faHospitalUser : faUserDoctor;
-
-  const handleLogout = () => {
-    // TODO: Replace with actual logout logic
-    console.log("Logged out");
-    router.push("/unauthenticated");
-  };
+  const icon = state.userType === "patient" ? faHospitalUser : faUserDoctor;
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -51,16 +43,14 @@ const UserMenu = () => {
         aria-expanded={open}
       >
         <FontAwesomeIcon icon={icon} className="text-xl text-gray-700" />
-        <span className="font-medium text-gray-700">
-          Hi, {dummyUser.userName}
-        </span>
+        <span className="font-medium text-gray-700">Hi, {state.userName}</span>
       </button>
 
       {open && (
         <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
           <button
             onClick={() => {
-              router.push("/profile");
+              router.push("dashboard/profile");
               setOpen(false);
             }}
             className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
@@ -69,7 +59,9 @@ const UserMenu = () => {
             Profile
           </button>
           <button
-            onClick={handleLogout}
+            onClick={async () => {
+              await logout().then(() => router.replace("/login"));
+            }}
             className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 border-t"
           >
             <FontAwesomeIcon

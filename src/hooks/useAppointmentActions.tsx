@@ -3,9 +3,10 @@ import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
 import Modal from "../components/Modal";
 import type { Appointment } from "../types/stateTypes";
-// import axiosInstance from "../api/axiosInterceptor";
-// import axios from "axios";
 import AppointmentModal from "@/components/AppointmentModal";
+import axiosInstance from "@/app/lib/axiosInterceptor";
+import axios from "axios";
+
 export function useAppointmentActions() {
   const { state, setState } = useAppContext();
   const [modal, setModal] = useState<null | JSX.Element>(null);
@@ -13,19 +14,19 @@ export function useAppointmentActions() {
   function deleteAppointment(id: number) {
     const handleConfirm = async () => {
       try {
-        // await axiosInstance.delete(`/appointments/${id}`);
+        await axiosInstance.delete(`/appointments/${id}`);
 
         const updated = state.appointments.filter((app) => app.id !== id);
         setState("appointments", updated);
         setModal(null);
       } catch (error: unknown) {
-        // if (axios.isAxiosError(error)) {
-        //   console.error("Failed to delete appointment:", error);
-        //   alert("Failed to delete appointment");
-        // } else {
-        //   console.error("Unexpected error:", error);
-        //   alert("Something went wrong");
-        // }
+        if (axios.isAxiosError(error)) {
+          console.error("Failed to delete appointment:", error);
+          alert("Failed to delete appointment");
+        } else {
+          console.error("Unexpected error:", error);
+          alert("Something went wrong");
+        }
       }
     };
 
@@ -48,9 +49,9 @@ export function useAppointmentActions() {
     const handleClose = () => setModal(null);
     const handleSuccess = () => {
       setModal(null);
-      //   axiosInstance
-      //     .get("/appointments/me")
-      //     .then((res) => setState("appointments", res.data));
+      axiosInstance
+        .get("/appointments/me")
+        .then((res) => setState("appointments", res.data));
     };
 
     setModal(

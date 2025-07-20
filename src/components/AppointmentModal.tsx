@@ -1,13 +1,12 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-// import axiosInstance from "../../api/axiosInterceptor";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
 import { Slot, slots } from "../const/const";
 import { isOld } from "@/utils/isOld";
 import Modal from "./Modal";
+import axiosInstance from "@/app/lib/axiosInterceptor";
 type Props = {
   onClose: () => void;
   onSuccess: () => void;
@@ -48,12 +47,12 @@ const AppointmentModal: React.FC<Props> = ({
   const [apiError, setApiError] = useState("");
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
 
-  //   useEffect(() => {
-  //     axiosInstance
-  //       .get("/users", { params: { user_type: "doctor" } })
-  //       .then((res) => setDoctors(res.data))
-  //       .catch(() => setApiError("Failed to load doctors"));
-  //   }, []);
+  useEffect(() => {
+    axiosInstance
+      .get("/users", { params: { user_type: "doctor" } })
+      .then((res) => setDoctors(res.data))
+      .catch(() => setApiError("Failed to load doctors"));
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -64,24 +63,24 @@ const AppointmentModal: React.FC<Props> = ({
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  //   useEffect(() => {
-  //     const fetchBookedSlots = async () => {
-  //       if (!form.doctor_id || !form.slot_date) return;
-  //       try {
-  //         const res = await axiosInstance.get("/slots/doctor", {
-  //           params: {
-  //             doctor_id: form.doctor_id,
-  //             slot_date: form.slot_date,
-  //           },
-  //         });
-  //         setBookedSlots(res.data);
-  //       } catch (err) {
-  //         console.error("Failed to fetch booked slots", err);
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      if (!form.doctor_id || !form.slot_date) return;
+      try {
+        const res = await axiosInstance.get("/slots/doctor", {
+          params: {
+            doctor_id: form.doctor_id,
+            slot_date: form.slot_date,
+          },
+        });
+        setBookedSlots(res.data);
+      } catch (err) {
+        console.error("Failed to fetch booked slots", err);
+      }
+    };
 
-  //     fetchBookedSlots();
-  //   }, [form.doctor_id, form.slot_date]);
+    fetchBookedSlots();
+  }, [form.doctor_id, form.slot_date]);
 
   const validate = () => {
     const tempErrors: { [K in keyof FormState]?: string } = {};
@@ -96,20 +95,20 @@ const AppointmentModal: React.FC<Props> = ({
     e.preventDefault();
     if (!validate()) return;
 
-    // try {
-    //   if (initialData) {
-    //     await axiosInstance.put(`/appointments/${initialData.id}`, form);
-    //   } else {
-    //     await axiosInstance.post("/appointments", {
-    //       ...form,
-    //       doctor_id: form.doctor_id,
-    //     });
-    //   }
-    //   onSuccess();
-    //   onClose();
-    // } catch (err: any) {
-    //   setApiError(err.response?.data?.message || "Something went wrong");
-    // }
+    try {
+      if (initialData) {
+        await axiosInstance.put(`/appointments/${initialData.id}`, form);
+      } else {
+        await axiosInstance.post("/appointments", {
+          ...form,
+          doctor_id: form.doctor_id,
+        });
+      }
+      onSuccess();
+      onClose();
+    } catch (err: any) {
+      setApiError(err.response?.data?.message || "Something went wrong");
+    }
   };
 
   return (
@@ -127,6 +126,7 @@ const AppointmentModal: React.FC<Props> = ({
             Doctor
           </label>
           <input
+            readOnly={!!initialData}
             type="text"
             id="doctor_search"
             placeholder="Search doctor by name..."

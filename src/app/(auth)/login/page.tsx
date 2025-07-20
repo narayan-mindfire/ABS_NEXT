@@ -4,21 +4,24 @@ import { useState } from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Link from "next/link";
+import axiosInstance from "@/app/lib/axiosInterceptor";
+import { useAppContext } from "@/context/app.context";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { setState } = useAppContext();
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
 
+  const router = useRouter();
   const validate = () => {
     let isValid = true;
     const newErrors = { email: "", password: "" };
 
-    // Simple email regex
     if (!email) {
       newErrors.email = "Email is required";
       isValid = false;
@@ -39,11 +42,20 @@ const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form is valid. Logging in...");
-      // proceed with login
+      try {
+        const res = await axiosInstance.post("/auth/login", {
+          email,
+          password,
+        });
+        console.log("Form is valid. Logging in...");
+        setState("token", res.data.token);
+        setState("userType", res.data.user_type);
+        setState("userName", res.data.user_name);
+        router.replace("/dashboard");
+      } catch (error) {}
     }
   };
 
