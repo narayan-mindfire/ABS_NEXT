@@ -1,11 +1,26 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  console.log("Middleware is running...");
-  //   return NextResponse.redirect(new URL("/", request.url));
+const PUBLIC_ROUTES = ["/", "/login", "/register"];
+const PROTECTED_ROUTES = ["/dashboard", "/dashboard/:path*"];
+
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const token = req.cookies.get("accessToken")?.value;
+
+  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const isProtectedRoute = pathname.startsWith("/dashboard");
+
+  if (isProtectedRoute && !token) {
+    return NextResponse.redirect(new URL("/unauthenticated", req.url));
+  }
+
+  if (isPublicRoute && token) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/login",
+  matcher: ["/", "/login", "/register", "/dashboard/:path*"],
 };

@@ -36,7 +36,6 @@ const Input: React.FC<InputProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
-  console.log("input is rendered");
   return (
     <div className="w-full mb-4">
       <label htmlFor={name} className="block text-sm font-medium mb-1">

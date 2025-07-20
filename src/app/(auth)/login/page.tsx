@@ -51,7 +51,6 @@ const Login = () => {
           password,
         });
         console.log("Form is valid. Logging in...");
-        setState("token", res.data.token);
         setState("userType", res.data.user_type);
         setState("userName", res.data.user_name);
         router.replace("/dashboard");
