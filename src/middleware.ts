@@ -8,7 +8,7 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("accessToken")?.value;
 
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-  const isProtectedRoute = pathname.startsWith("/dashboard");
+  const isProtectedRoute = PROTECTED_ROUTES.includes(pathname);
 
   if (isProtectedRoute && !token) {
     return NextResponse.redirect(new URL("/unauthenticated", req.url));

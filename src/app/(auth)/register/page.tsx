@@ -5,6 +5,10 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { validationService } from "@/utils/validationService";
+import { useRouter } from "next/navigation";
+import axiosInstance from "@/app/lib/axiosInterceptor";
+import { useAppContext } from "@/context/app.context";
+
 type UserType = "doctor" | "patient";
 
 interface FormFields {
@@ -53,6 +57,18 @@ const Register = () => {
   const [errors, setErrors] = useState<
     Partial<Record<keyof FormFields, string>>
   >({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const specializations = [
+    "Cardiology",
+    "Medicine",
+    "Dermatology",
+    "Neurology",
+    "Pediatrics",
+  ];
+
+  const router = useRouter();
+  const { setState } = useAppContext();
   const validators = validationService();
 
   const handleChange = (
@@ -62,7 +78,7 @@ const Register = () => {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error on change
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const validateFields = () => {
@@ -98,12 +114,25 @@ const Register = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateFields()) return;
 
-    console.log("Form valid, submit logic goes here");
-    // You can call API here
+    setSubmitting(true);
+    try {
+      const res = await axiosInstance.post("/auth/register", form);
+
+      setState("userType", res.data.user_type);
+      setState("userName", res.data.user_name);
+
+      router.replace("/dashboard");
+    } catch (error: any) {
+      const errMsg =
+        error.response?.data?.message || "Registration failed. Try again.";
+      alert(errMsg);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -111,6 +140,7 @@ const Register = () => {
       <form
         className="w-full max-w-2xl bg-white p-10 rounded-xl shadow-lg space-y-8"
         onSubmit={handleSubmit}
+        noValidate
       >
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800">
@@ -180,7 +210,7 @@ const Register = () => {
                 name="specialization"
                 value={form.specialization}
                 onChange={handleChange}
-                placeholder="e.g. Cardiology"
+                selectOptions={specializations}
                 error={errors.specialization}
               />
               <Input
@@ -217,12 +247,17 @@ const Register = () => {
         </div>
 
         <div className="space-y-3">
-          <Button className="w-full" variant="default">
-            Register
+          <Button
+            className="w-full"
+            variant="default"
+            type="submit"
+            disabled={submitting}
+          >
+            {submitting ? "Registering..." : "Register"}
           </Button>
           <p className="text-center text-gray-500 text-sm">or</p>
           <Link href="/login">
-            <Button className="w-full" variant="outline">
+            <Button className="w-full" variant="outline" type="button">
               Log In
             </Button>
           </Link>

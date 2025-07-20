@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import ClientProfile from "../../../components/ClientProfile";
+import { secureFetch } from "@/app/lib/fetchUse";
 
 const Profile = async () => {
   const cookieStore = cookies();
@@ -9,13 +10,7 @@ const Profile = async () => {
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
 
-  const res = await fetch("http://localhost:5001/api/v1/users/me", {
-    credentials: "include",
-    headers: {
-      Cookie: cookieHeader,
-    },
-    cache: "no-store",
-  });
+  const res = await secureFetch("http://localhost:5001/api/v1/users/me");
 
   if (!res.ok) {
     return <p>Unauthorized or error loading profile</p>;

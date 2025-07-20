@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import ClientDashboard from "../../components/ClientDashboard";
+import { secureFetch } from "../lib/fetchUse";
 
 const Dashboard = async () => {
   const cookieStore = cookies();
@@ -9,26 +10,15 @@ const Dashboard = async () => {
     .join("; ");
 
   try {
-    const res = await fetch("http://localhost:5001/api/v1/appointments/me", {
-      headers: {
-        Cookie: cookieHeader,
-      },
-      cache: "no-store",
-    });
-
+    const res = await secureFetch(
+      "http://localhost:5001/api/v1/appointments/me"
+    );
     if (!res.ok) {
       return <p>Unauthorized or failed to fetch appointments</p>;
     }
 
     const appointments = await res.json();
-
-    // Optionally fetch userType from /users/me if needed
-    const userRes = await fetch("http://localhost:5001/api/v1/users/me", {
-      headers: {
-        Cookie: cookieHeader,
-      },
-      cache: "no-store",
-    });
+    const userRes = await secureFetch("http://localhost:5001/api/v1/users/me");
 
     const user = await userRes.json();
 
