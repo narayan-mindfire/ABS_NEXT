@@ -45,7 +45,6 @@ export function useAppointmentActions() {
   }
 
   function editAppointment(appointment: Appointment) {
-    console.log("Editing appointment:", appointment);
     const handleClose = () => setModal(null);
     const handleSuccess = () => {
       setModal(null);

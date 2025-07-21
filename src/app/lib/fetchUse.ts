@@ -1,4 +1,3 @@
-// lib/secureFetch.ts
 import { cookies } from "next/headers";
 
 export async function secureFetch(
@@ -11,7 +10,6 @@ export async function secureFetch(
     .getAll()
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
-
   const res = await fetch(url, {
     ...options,
     headers: {
@@ -23,8 +21,6 @@ export async function secureFetch(
   });
 
   if (res.status === 401 && attempt < 1) {
-    console.log("Access token expired, trying to refresh...");
-    // Try to refresh the token
     const refreshRes = await fetch(
       "http://localhost:5001/api/v1/auth/refresh-token",
       {
@@ -35,10 +31,8 @@ export async function secureFetch(
         credentials: "include",
       }
     );
-    console.log("Refresh token response:", refreshRes);
 
     if (refreshRes.ok) {
-      // Try the original request again after refreshing
       return secureFetch(url, options, attempt + 1);
     }
   }

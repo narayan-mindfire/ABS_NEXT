@@ -8,6 +8,7 @@ import {
   faHospitalUser,
   faRightFromBracket,
   faUser,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "@/context/app.context";
 import { logout } from "@/app/lib/logout";
@@ -16,6 +17,7 @@ const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { state } = useAppContext();
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -25,7 +27,6 @@ const UserMenu = () => {
       setOpen(false);
     }
   };
-  const { state } = useAppContext();
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -38,35 +39,55 @@ const UserMenu = () => {
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition"
+        className="flex mr-5 items-center gap-3 px-4 py-2 rounded-full hover:bg-gray-100 transition-all border border-gray-200 shadow-sm"
         aria-haspopup="true"
         aria-expanded={open}
       >
         <FontAwesomeIcon icon={icon} className="text-xl text-gray-700" />
-        {/* <span className="font-medium text-gray-700">Hi, {state.userName}</span> */}
+        <div className="text-left hidden md:block">
+          <p className="text-sm font-medium text-gray-800">
+            {state.userName || "User"}
+          </p>
+          <p className="text-xs text-gray-500 capitalize">{state.userType}</p>
+        </div>
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
-          <button
-            onClick={() => {
-              router.push("dashboard/profile");
-              setOpen(false);
-            }}
-            className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
-          >
-            <FontAwesomeIcon icon={faUser} className="mr-2 text-sm" />
-            Profile
-          </button>
+        <div className="absolute right-0 mt-3 w-56 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+          <div className="py-2">
+            <button
+              onClick={() => {
+                router.push("/dashboard/profile");
+                setOpen(false);
+              }}
+              className="flex items-center w-full gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+            >
+              <FontAwesomeIcon icon={faUser} className="text-gray-500" />
+              Profile
+            </button>
+
+            <button
+              onClick={() => {
+                alert("Settings clicked");
+              }}
+              className="flex items-center w-full gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+            >
+              <FontAwesomeIcon icon={faGear} className="text-gray-500" />
+              Settings
+            </button>
+          </div>
+
+          <div className="border-t border-gray-200" />
+
           <button
             onClick={async () => {
-              await logout().then(() => router.replace("/login"));
+              await logout().then(() => router.replace("/"));
             }}
-            className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 border-t"
+            className="flex items-center w-full gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
           >
             <FontAwesomeIcon
               icon={faRightFromBracket}
-              className="mr-2 text-sm"
+              className="text-red-500"
             />
             Logout
           </button>

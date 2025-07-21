@@ -1,5 +1,5 @@
 "use client";
-import React, { JSX } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { useAppContext } from "../context/app.context";
 import type { Appointment } from "../types/stateTypes";
 import { sortAppointments } from "@/utils/sortAppointments";
@@ -51,22 +51,22 @@ const TableRow: React.FC<TableRowProps> = ({
 };
 
 const AppointmentTable = ({
-  appointments,
+  initialAppointments,
   userType,
 }: {
-  appointments: Appointment[];
+  initialAppointments: Appointment[];
   userType: "patient" | "doctor" | "admin" | null;
 }): JSX.Element => {
   const { modal, deleteAppointment, editAppointment } = useAppointmentActions();
   const { state } = useAppContext();
-  const sortKey = state.sortAppointmentsBy as Exclude<
-    keyof Appointment,
-    "id"
-  > | null;
+  const [appointments, setAppointments] = useState(initialAppointments);
+  const sortedAppointments = state.sortAppointmentsBy
+    ? sortAppointments(appointments, state.sortAppointmentsBy)
+    : appointments;
 
-  if (sortKey) {
-    appointments = sortAppointments(appointments, sortKey);
-  }
+  useEffect(() => {
+    setAppointments(state.appointments || []);
+  }, [state.appointments]);
 
   return (
     <>
@@ -82,7 +82,7 @@ const AppointmentTable = ({
           </tr>
         </thead>
         <tbody className="text-sm">
-          {appointments.map((app) => (
+          {sortedAppointments.map((app) => (
             <TableRow
               key={app.id}
               app={app}

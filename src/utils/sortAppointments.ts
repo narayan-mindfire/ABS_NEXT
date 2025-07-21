@@ -10,9 +10,8 @@ function sortAppointments(
   appointments: Appointment[],
   sortBy: SortAppointmentsBy
 ): Appointment[] {
-  console.log("printing appointments", appointments);
   const sorted: Appointment[] = [...appointments];
-
+  if (!sortBy) sortBy = "dateR";
   switch (sortBy) {
     case "date":
       sorted.sort((a, b) => a.date.localeCompare(b.date));

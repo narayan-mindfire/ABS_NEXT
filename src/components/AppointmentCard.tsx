@@ -71,7 +71,6 @@ const AppointmentCard: React.FC<CardProps> = ({
               variant="default"
               children={"Edit"}
               onClick={() => {
-                console.log("editing called");
                 editAppointment(app);
               }}
               className="w-full"

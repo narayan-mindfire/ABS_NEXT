@@ -36,9 +36,8 @@ const ClientProfile = ({ user }: { user: User }) => {
   const confirmDelete = async () => {
     try {
       await axiosInstance.delete("/users/me");
-      await logout().then(() => router.replace("/login"));
+      await logout().then(() => router.replace("/"));
     } catch (error) {
-      console.log("Failed to delete user", error);
     } finally {
       setShowDeleteModal(false);
     }
@@ -48,7 +47,7 @@ const ClientProfile = ({ user }: { user: User }) => {
     e.preventDefault();
     try {
       const res = await axiosInstance.put("/users/me", form);
-      setUser(res.data); // update state with response
+      setUser(res.data);
       setEditModalOpen(false);
     } catch (err) {
       console.error("Failed to update profile", err);
@@ -63,21 +62,19 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black px-4 sm:px-10 py-12">
+    <div className="max-h-[80vh] overflow-y-auto text-black px-4 sm:px-10 py-5 ">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-        {/* Back Button */}
         <div className="mb-4">
           <Button
             variant="ghost"
             onClick={() => router.back()}
-            className="text-sm text-gray-600"
+            className="text-sm text-gray-600 ps-0"
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
             Back
           </Button>
         </div>
 
-        {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-semibold flex items-center gap-3">
             <FontAwesomeIcon icon={faUser} className="text-black text-2xl" />
@@ -107,7 +104,6 @@ const ClientProfile = ({ user }: { user: User }) => {
           />
         )}
 
-        {/* Action Buttons */}
         <div className="border-t mt-10 pt-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
           <Button
             className="w-full sm:w-auto"
@@ -120,7 +116,7 @@ const ClientProfile = ({ user }: { user: User }) => {
           <Button
             className="w-full sm:w-auto"
             onClick={async () => {
-              await logout().then(() => router.replace("/login"));
+              await logout().then(() => router.replace("/"));
             }}
             variant="outline"
           >
@@ -130,7 +126,6 @@ const ClientProfile = ({ user }: { user: User }) => {
         </div>
       </div>
 
-      {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <Modal
           title="Delete Profile"
