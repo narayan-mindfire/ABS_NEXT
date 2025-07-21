@@ -14,6 +14,17 @@ const sidebarOptions = [
   { label: "Profile", path: "/dashboard/profile" },
 ];
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {React.ReactNode} children - The child components to render within the layout.
+ * This layout provides a consistent sidebar and header for the dashboard.
+ * It includes a responsive sidebar that can be toggled on smaller screens.
+ * It also handles user logout functionality.
+ * @description This component serves as the layout for the dashboard, providing a sidebar and header.
+ * It uses the application context to manage user state and provides navigation options.
+ * @returns {JSX.Element} The rendered layout component.
+ */
 export default function DashboardLayout({
   children,
 }: {

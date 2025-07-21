@@ -19,7 +19,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        await axiosInstance.put("/auth/refresh-token");
+        await axiosInstance.post("/auth/refresh-token");
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Session expired. Please login again.", refreshError);

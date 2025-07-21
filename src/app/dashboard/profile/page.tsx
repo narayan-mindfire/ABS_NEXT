@@ -1,6 +1,10 @@
 import ClientProfile from "@/components/ClientProfile";
 import { secureFetch } from "@/app/lib/fetchUse";
 
+/**
+ * Profile page component that fetches and displays user profile information.
+ * @returns Profile page component that fetches and displays user profile information.
+ */
 const ProfilePage = async () => {
   const res = await secureFetch("http://localhost:5001/api/v1/users/me");
 

@@ -3,6 +3,11 @@ import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Button from "@/components/Button";
 
+/**
+ * Unauthorized page component that displays a message indicating the user does not have permission to view the page.
+ * @returns Unauthorized page component that displays a message indicating the user does not have permission to view the page.
+ * It includes a button to navigate back to the home page.
+ */
 export default function UnauthorizedPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">

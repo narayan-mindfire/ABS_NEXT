@@ -8,38 +8,14 @@ import { validationService } from "@/utils/validationService";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";
+import { validationConfig } from "@/const/const";
+import { FormFields } from "@/types/stateTypes";
 
-type UserType = "doctor" | "patient";
-
-interface FormFields {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  password: string;
-  user_type: UserType;
-  specialization: string;
-  bio: string;
-  gender: string;
-  date_of_birth: string;
-}
-
-const validationConfig: Record<
-  keyof FormFields,
-  Array<keyof ReturnType<typeof validationService>>
-> = {
-  first_name: ["isRequired"],
-  last_name: ["isRequired"],
-  email: ["isRequired", "isEmailFormat"],
-  phone: ["isRequired", "isPhone"],
-  password: ["isRequired"],
-  user_type: ["isRequired"],
-  specialization: ["isRequired"],
-  bio: [],
-  gender: ["isRequired"],
-  date_of_birth: ["isRequired"],
-};
-
+/**
+ * Registration page component that allows users to create an account as a doctor or patient.
+ * It includes form validation and submission handling.
+ * @returns Registration page component that allows users to create an account as a doctor or patient.
+ */
 const Register = () => {
   const [form, setForm] = useState<FormFields>({
     first_name: "",
@@ -81,6 +57,10 @@ const Register = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  /**
+   * Validates the form fields.
+   * @returns boolean indicating whether the form fields are valid.
+   */
   const validateFields = () => {
     let valid = true;
     const tempErrors: typeof errors = {};
@@ -114,6 +94,12 @@ const Register = () => {
     return valid;
   };
 
+  /**
+   *
+   * @param e - Form submission event.
+   * Handles form submission for user registration.
+   * Validates the form fields and sends a POST request to register the user.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateFields()) return;

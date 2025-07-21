@@ -47,3 +47,18 @@ export interface User {
   gender?: string;
   date_of_birth?: string;
 }
+
+export type UserType = "doctor" | "patient";
+
+export interface FormFields {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  password: string;
+  user_type: UserType;
+  specialization: string;
+  bio: string;
+  gender: string;
+  date_of_birth: string;
+}

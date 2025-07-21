@@ -1,5 +1,12 @@
 import { cookies } from "next/headers";
 
+/**
+ * Securely fetch data from a URL with cookie support and automatic token refreshing.
+ * @param url - The URL to fetch data from.
+ * @param options - Fetch options.
+ * @param attempt - The current attempt number (for retrying on 401).
+ * @returns The fetch response.
+ */
 export async function secureFetch(
   url: string,
   options?: RequestInit,

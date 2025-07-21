@@ -1,14 +1,12 @@
-import { cookies } from "next/headers";
 import ClientDashboard from "../../components/ClientDashboard";
 import { secureFetch } from "../lib/fetchUse";
 
+/**
+ * dashboard page component that fetches and displays user appointments and profile information.
+ * It uses the secureFetch function to handle authentication and data retrieval.
+ * @returns Dashboard page component that fetches and displays user appointments and profile information.
+ */
 const Dashboard = async () => {
-  const cookieStore = cookies();
-  const cookieHeader = (await cookieStore)
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   try {
     const res = await secureFetch(
       "http://localhost:5001/api/v1/appointments/me"

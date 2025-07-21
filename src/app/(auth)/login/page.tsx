@@ -8,6 +8,10 @@ import axiosInstance from "@/app/lib/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";
 import { useRouter } from "next/navigation";
 
+/**
+ * Login page that allows users to log in with their email and password.
+ * @returns Login page component that allows users to log in with their email and password.
+ */
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

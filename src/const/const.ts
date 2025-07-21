@@ -9,6 +9,9 @@
 //     "purpose": [],
 // }
 
+import { FormFields } from "@/types/stateTypes";
+import { validationService } from "@/utils/validationService";
+
 // // doctor list
 // const docs = [
 //   "Aarya Sharma",
@@ -54,3 +57,19 @@ export const slots: Slot[] = [
 ];
 
 export { slots as allSlots };
+
+export const validationConfig: Record<
+  keyof FormFields,
+  Array<keyof ReturnType<typeof validationService>>
+> = {
+  first_name: ["isRequired"],
+  last_name: ["isRequired"],
+  email: ["isRequired", "isEmailFormat"],
+  phone: ["isRequired", "isPhone"],
+  password: ["isRequired"],
+  user_type: ["isRequired"],
+  specialization: ["isRequired"],
+  bio: [],
+  gender: ["isRequired"],
+  date_of_birth: ["isRequired"],
+};

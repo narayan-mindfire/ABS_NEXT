@@ -3,6 +3,10 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Button from "@/components/Button";
 
+/**
+ * Unauthenticated page component that displays a message indicating the user is not logged in.
+ * @returns Unauthenticated page component that displays a message indicating the user is not logged in.
+ */
 export default function UnauthenticatedPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
