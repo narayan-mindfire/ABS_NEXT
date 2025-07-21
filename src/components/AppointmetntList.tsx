@@ -6,6 +6,13 @@ import { Appointment } from "@/types/stateTypes";
 import { faThLarge, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {Appointment[]} param0.appointments - List of appointments to display.
+ * @param {"patient" | "doctor" | "admin" | null} param0.userType - The type of user viewing the appointments.
+ * @returns
+ */
 const AppointmentList = ({
   appointments,
   userType,

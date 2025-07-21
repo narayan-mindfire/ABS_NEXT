@@ -7,6 +7,18 @@ import AppointmentModal from "@/components/AppointmentModal";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import axios from "axios";
 
+/**
+ * Custom React hook to manage appointment-related actions such as deleting or editing appointments.
+ *
+ * Integrates with application context to manage global state and uses modals to handle user interactions.
+ *
+ * @returns {{
+ *   deleteAppointment: (id: number) => void,
+ *   editAppointment: (appointment: Appointment) => void,
+ *   modal: JSX.Element
+ * }} An object containing action handlers and the modal element.
+ *
+ */
 export function useAppointmentActions() {
   const { state, setState } = useAppContext();
   const [modal, setModal] = useState<null | JSX.Element>(null);

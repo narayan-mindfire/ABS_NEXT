@@ -6,6 +6,16 @@ import { sortAppointments } from "@/utils/sortAppointments";
 import { useAppointmentActions } from "../hooks/useAppointmentActions";
 import Button from "./Button";
 
+/**
+ * TableRow Component
+ *
+ * Renders a single row in the appointment table.
+ * Displays appointment details and provides actions based on user type.
+ *
+ * @component
+ * @param {TableRowProps} props - The props for the TableRow component.
+ * @returns {JSX.Element}
+ */
 interface TableRowProps {
   app: Appointment;
   isEditing?: boolean;

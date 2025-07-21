@@ -11,6 +11,17 @@ interface CardProps {
   userType: "patient" | "doctor" | "admin" | null;
 }
 
+/**
+ * AppointmentCard Component
+ *
+ * Renders a styled card displaying an appointment's information.
+ * Depending on the `userType` and `readonly` props, it shows different data and allows editing or deleting.
+ *
+ * @component
+ * @param {CardProps} props - The props for the AppointmentCard component.
+ * @returns {JSX.Element}
+ *
+ */
 const AppointmentCard: React.FC<CardProps> = ({
   app,
   isEditing,

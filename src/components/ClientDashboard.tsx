@@ -12,6 +12,16 @@ type Props = {
   userType: "patient" | "doctor" | "admin" | null;
 };
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {Appointment[]} param0.appointments - List of appointments to display.
+ * @param {"patient" | "doctor" | "admin" | null} param0.userType - The type of user viewing the appointments.
+ * @description This component serves as the client dashboard, displaying a list of appointments and allowing patients to create new appointments.
+ * It uses the AppointmentModal for creating or editing appointments.
+ * It also manages the state of appointments and user type using the application context.
+ * @returns
+ */
 const ClientDashboard = ({ appointments, userType }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const { setState } = useAppContext();

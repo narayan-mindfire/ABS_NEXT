@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "@/context/app.context";
 import { logout } from "@/app/lib/logout";
+import Button from "./Button";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
@@ -55,26 +56,25 @@ const UserMenu = () => {
       {open && (
         <div className="absolute right-0 mt-3 w-56 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
           <div className="py-2">
-            <button
+            <Button
               onClick={() => {
                 router.push("/dashboard/profile");
                 setOpen(false);
               }}
-              className="flex items-center w-full gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+              variant="ghost"
+              className="flex items-center w-full gap-2 hover:bg-gray-100 transition text-gray-500"
             >
               <FontAwesomeIcon icon={faUser} className="text-gray-500" />
               Profile
-            </button>
+            </Button>
 
-            <button
-              onClick={() => {
-                alert("Settings clicked");
-              }}
-              className="flex items-center w-full gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition"
+            <Button
+              variant="ghost"
+              className="flex items-center w-full gap-2 hover:bg-gray-100 transition text-gray-500"
             >
               <FontAwesomeIcon icon={faGear} className="text-gray-500" />
               Settings
-            </button>
+            </Button>
           </div>
 
           <div className="border-t border-gray-200" />

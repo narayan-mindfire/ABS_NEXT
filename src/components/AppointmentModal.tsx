@@ -28,6 +28,20 @@ interface FormState {
   status: string;
 }
 
+/**
+ * AppointmentModal Component
+ * @param param0 - Component properties including onClose, onSuccess callbacks and initialData for editing.
+ * @param {Function} onClose - Callback to close the modal.
+ * @param {Function} onSuccess - Callback to execute on successful appointment creation or update.
+ * @param {Object} initialData - Optional initial data for editing an existing appointment.
+ * @param {number} initialData.id - ID of the appointment (for editing).
+ * @param {string} initialData.slot_date - Date of the appointment.
+ * @param {string} initialData.slot_time - Time of the appointment.
+ * @param {string} initialData.purpose - Purpose of the appointment.
+ * @param {string} initialData.status - Status of the appointment.
+ * @param {string} initialData.doctor - Name of the doctor for the appointment.
+ * @returns
+ */
 const AppointmentModal: React.FC<Props> = ({
   onClose,
   onSuccess,

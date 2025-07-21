@@ -1,4 +1,9 @@
 import { User } from "../types/stateTypes";
+/**
+ * ProfileDetails component displays user profile information.
+ * @param param0 - Component properties.
+ * @returns JSX.Element
+ */
 const ProfileDetails: React.FC<{ user: User }> = ({ user }) => {
   return (
     <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 border rounded-lg shadow p-6">

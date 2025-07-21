@@ -21,6 +21,14 @@ interface InputProps {
   min?: string;
 }
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {string} param0.label - Label for the input field.
+ * @param {string} param0.name - Name attribute for the input field.
+ * @param {string} [param0.type="text"] - Type of the input field.
+ * @returns JSX.Element
+ */
 const Input: React.FC<InputProps> = ({
   label,
   name,

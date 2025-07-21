@@ -1,6 +1,10 @@
 import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
 import { clsx } from "clsx";
 
+/**
+ * Button component that renders a styled button with various variants.
+ * Supports different styles based on the variant prop and can be disabled.
+ */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: "default" | "outline" | "danger" | "ghost";

@@ -28,13 +28,13 @@ export default function DashboardLayout({
 
   return (
     <div className="max-h-[90vh] overflow-hidden flex bg-gray-50 relative overflow-x-hidden">
-      <div className="hidden md:flex w-64 bg-zinc-200 shadow-md p-6 flex-col justify-between">
+      <div className="hidden md:flex w-64 shadow-md p-6 flex-col justify-between">
         <div className="space-y-6">
           <div>
             <p className="text-gray-800 font-semibold text-lg">
               Hi, {username}
             </p>
-            <p className="text-gray-500 text-sm">Welcome back!</p>
+            <p className="text-gray-500 text-sm">Welcome!</p>
           </div>
           <div className="space-y-4">
             {sidebarOptions.map(({ label, path }) => (
@@ -71,7 +71,7 @@ export default function DashboardLayout({
                   <p className="text-gray-800 font-semibold text-lg">
                     Hi, {username}
                   </p>
-                  <p className="text-gray-500 text-sm">Welcome back!</p>
+                  <p className="text-gray-500 text-sm">Welcome!</p>
                 </div>
                 <button onClick={() => setSidebarOpen(false)}>
                   <X size={24} />

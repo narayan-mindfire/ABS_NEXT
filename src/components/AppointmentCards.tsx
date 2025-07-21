@@ -6,6 +6,14 @@ import { useAppContext } from "../context/app.context";
 import { sortAppointments } from "../utils/sortAppointments";
 import type { Appointment } from "../types/stateTypes";
 
+/**
+ * Component to display a list of appointment cards.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Appointment[]} props.initialAppointments - Initial list of appointments to display.
+ * @param {"patient" | "doctor" | "admin" | null} props.userType - The type of user viewing the appointments.
+ * @returns {JSX.Element} Rendered component with appointment cards.
+ */
 function AppointmentCards({
   initialAppointments,
   userType,

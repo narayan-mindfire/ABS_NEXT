@@ -62,18 +62,9 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   return (
-    <div className="max-h-[80vh] overflow-y-auto text-black px-4 sm:px-10 py-5 ">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
-        <div className="mb-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="text-sm text-gray-600 ps-0"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
-            Back
-          </Button>
-        </div>
+    <div className="max-h-[80vh] overflow-y-auto text-black px-4 sm:px-10 py-0 ">
+      <div className="mx-auto bg-zinc-50 rounded-2xl px-8 py-0">
+        <div className="mb-4"></div>
 
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-semibold flex items-center gap-3">
