@@ -11,6 +11,18 @@ interface Props {
   onSubmit: (e: React.FormEvent) => void;
 }
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {Partial<User>} param0.form - Form data for the user profile.
+ * @param {"doctor" | "patient"} param0.userType - Type of user (doctor or patient).
+ * @param {Function} param0.onChange - Function to handle input changes.
+ * @param {Function} param0.onClose - Function to close the form.
+ * @param {Function} param0.onSubmit - Function to handle form submission.
+ * @description This component renders a form for editing user profile information.
+ * It includes fields for first name, last name, email, phone number, and additional fields
+ * @returns JSX.Element
+ */
 const EditProfileForm: React.FC<Props> = ({
   form,
   userType,

@@ -8,6 +8,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+/**
+ * Home page component that displays a welcome message and three feature cards.
+ * @returns Home page component that displays a welcome message and three feature cards.
+ * It includes a header with navigation links to login and register pages.
+ */
 export default function Home() {
   return (
     <>

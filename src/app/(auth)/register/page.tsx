@@ -5,37 +5,17 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { validationService } from "@/utils/validationService";
-type UserType = "doctor" | "patient";
+import { useRouter } from "next/navigation";
+import axiosInstance from "@/app/lib/axiosInterceptor";
+import { useAppContext } from "@/context/app.context";
+import { validationConfig } from "@/const/const";
+import { FormFields } from "@/types/stateTypes";
 
-interface FormFields {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  password: string;
-  user_type: UserType;
-  specialization: string;
-  bio: string;
-  gender: string;
-  date_of_birth: string;
-}
-
-const validationConfig: Record<
-  keyof FormFields,
-  Array<keyof ReturnType<typeof validationService>>
-> = {
-  first_name: ["isRequired"],
-  last_name: ["isRequired"],
-  email: ["isRequired", "isEmailFormat"],
-  phone: ["isRequired", "isPhone"],
-  password: ["isRequired"],
-  user_type: ["isRequired"],
-  specialization: ["isRequired"],
-  bio: [],
-  gender: ["isRequired"],
-  date_of_birth: ["isRequired"],
-};
-
+/**
+ * Registration page component that allows users to create an account as a doctor or patient.
+ * It includes form validation and submission handling.
+ * @returns Registration page component that allows users to create an account as a doctor or patient.
+ */
 const Register = () => {
   const [form, setForm] = useState<FormFields>({
     first_name: "",
@@ -53,6 +33,18 @@ const Register = () => {
   const [errors, setErrors] = useState<
     Partial<Record<keyof FormFields, string>>
   >({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const specializations = [
+    "Cardiology",
+    "Medicine",
+    "Dermatology",
+    "Neurology",
+    "Pediatrics",
+  ];
+
+  const router = useRouter();
+  const { setState } = useAppContext();
   const validators = validationService();
 
   const handleChange = (
@@ -62,9 +54,13 @@ const Register = () => {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear error on change
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  /**
+   * Validates the form fields.
+   * @returns boolean indicating whether the form fields are valid.
+   */
   const validateFields = () => {
     let valid = true;
     const tempErrors: typeof errors = {};
@@ -98,12 +94,31 @@ const Register = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /**
+   *
+   * @param e - Form submission event.
+   * Handles form submission for user registration.
+   * Validates the form fields and sends a POST request to register the user.
+   */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateFields()) return;
 
-    console.log("Form valid, submit logic goes here");
-    // You can call API here
+    setSubmitting(true);
+    try {
+      const res = await axiosInstance.post("/auth/register", form);
+
+      setState("userType", res.data.user_type);
+      setState("userName", res.data.user_name);
+
+      router.replace("/dashboard");
+    } catch (error: any) {
+      const errMsg =
+        error.response?.data?.message || "Registration failed. Try again.";
+      alert(errMsg);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -111,6 +126,7 @@ const Register = () => {
       <form
         className="w-full max-w-2xl bg-white p-10 rounded-xl shadow-lg space-y-8"
         onSubmit={handleSubmit}
+        noValidate
       >
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800">
@@ -180,7 +196,7 @@ const Register = () => {
                 name="specialization"
                 value={form.specialization}
                 onChange={handleChange}
-                placeholder="e.g. Cardiology"
+                selectOptions={specializations}
                 error={errors.specialization}
               />
               <Input
@@ -217,12 +233,17 @@ const Register = () => {
         </div>
 
         <div className="space-y-3">
-          <Button className="w-full" variant="default">
-            Register
+          <Button
+            className="w-full"
+            variant="default"
+            type="submit"
+            disabled={submitting}
+          >
+            {submitting ? "Registering..." : "Register"}
           </Button>
           <p className="text-center text-gray-500 text-sm">or</p>
           <Link href="/login">
-            <Button className="w-full" variant="outline">
+            <Button className="w-full" variant="outline" type="button">
               Log In
             </Button>
           </Link>

@@ -11,6 +11,19 @@ interface ModalProps {
   cancelText?: string;
 }
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {string} [param0.title] - Title of the modal.
+ * @param {() => void} param0.onClose - Function to call when the modal is closed.
+ * @param {React.ReactNode} [param0.children] - Content to display inside the modal.
+ * @param {string} [param0.message] - Message to display in the modal.
+ * @param {() => void} [param0.onConfirm] - Function to call when the confirm button is clicked.
+ * @param {string} [param0.confirmText="Confirm"] - Text for the confirm button.
+ * @param {string} [param0.cancelText="Cancel"] - Text for the cancel button.
+ * @description This component renders a modal dialog with a title, message, and optional children.
+ * @returns JSX.Element
+ */
 const Modal: React.FC<ModalProps> = ({
   title,
   onClose,

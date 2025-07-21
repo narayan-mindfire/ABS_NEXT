@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +21,14 @@ interface InputProps {
   min?: string;
 }
 
+/**
+ *
+ * @param param0 - Component properties.
+ * @param {string} param0.label - Label for the input field.
+ * @param {string} param0.name - Name attribute for the input field.
+ * @param {string} [param0.type="text"] - Type of the input field.
+ * @returns JSX.Element
+ */
 const Input: React.FC<InputProps> = ({
   label,
   name,
@@ -35,7 +44,6 @@ const Input: React.FC<InputProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
   const inputType = isPassword ? (showPassword ? "text" : "password") : type;
-
   return (
     <div className="w-full mb-4">
       <label htmlFor={name} className="block text-sm font-medium mb-1">

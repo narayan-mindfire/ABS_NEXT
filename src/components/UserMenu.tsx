@@ -8,17 +8,17 @@ import {
   faHospitalUser,
   faRightFromBracket,
   faUser,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
-
-const dummyUser = {
-  userType: "doctor",
-  userName: "Narayan",
-};
+import { useAppContext } from "@/context/app.context";
+import { logout } from "@/app/lib/logout";
+import Button from "./Button";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { state } = useAppContext();
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -34,47 +34,60 @@ const UserMenu = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const icon = dummyUser.userType === "patient" ? faHospitalUser : faUserDoctor;
-
-  const handleLogout = () => {
-    // TODO: Replace with actual logout logic
-    console.log("Logged out");
-    router.push("/unauthenticated");
-  };
+  const icon = state.userType === "patient" ? faHospitalUser : faUserDoctor;
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 transition"
+        className="flex mr-5 items-center gap-3 px-4 py-2 rounded-full hover:bg-gray-100 transition-all border border-gray-200 shadow-sm"
         aria-haspopup="true"
         aria-expanded={open}
       >
         <FontAwesomeIcon icon={icon} className="text-xl text-gray-700" />
-        <span className="font-medium text-gray-700">
-          Hi, {dummyUser.userName}
-        </span>
+        <div className="text-left hidden md:block">
+          <p className="text-sm font-medium text-gray-800">
+            {state.userName || "User"}
+          </p>
+          <p className="text-xs text-gray-500 capitalize">{state.userType}</p>
+        </div>
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
+        <div className="absolute right-0 mt-3 w-56 bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
+          <div className="py-2">
+            <Button
+              onClick={() => {
+                router.push("/dashboard/profile");
+                setOpen(false);
+              }}
+              variant="ghost"
+              className="flex items-center w-full gap-2 hover:bg-gray-100 transition text-gray-500"
+            >
+              <FontAwesomeIcon icon={faUser} className="text-gray-500" />
+              Profile
+            </Button>
+
+            <Button
+              variant="ghost"
+              className="flex items-center w-full gap-2 hover:bg-gray-100 transition text-gray-500"
+            >
+              <FontAwesomeIcon icon={faGear} className="text-gray-500" />
+              Settings
+            </Button>
+          </div>
+
+          <div className="border-t border-gray-200" />
+
           <button
-            onClick={() => {
-              router.push("/profile");
-              setOpen(false);
+            onClick={async () => {
+              await logout().then(() => router.replace("/"));
             }}
-            className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-50"
-          >
-            <FontAwesomeIcon icon={faUser} className="mr-2 text-sm" />
-            Profile
-          </button>
-          <button
-            onClick={handleLogout}
-            className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-50 border-t"
+            className="flex items-center w-full gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
           >
             <FontAwesomeIcon
               icon={faRightFromBracket}
-              className="mr-2 text-sm"
+              className="text-red-500"
             />
             Logout
           </button>
