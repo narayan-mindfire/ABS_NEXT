@@ -1,5 +1,6 @@
 import ClientDashboard from "../../components/ClientDashboard";
 import { secureFetch } from "../lib/fetchUse";
+import AttemptRefresh from "../refresh/page";
 
 /**
  * dashboard page component that fetches and displays user appointments and profile information.
@@ -12,7 +13,7 @@ const Dashboard = async () => {
       "http://localhost:5001/api/v1/appointments/me"
     );
     if (!res.ok) {
-      return <p>Unauthorized or failed to fetch appointments</p>;
+      return <AttemptRefresh redirectTo="/dashboard" />;
     }
 
     const appointments = await res.json();
@@ -25,7 +26,8 @@ const Dashboard = async () => {
       <ClientDashboard appointments={appointments} userType={user.user_type} />
     );
   } catch (err) {
-    return <p>Error fetching data</p>;
+    console.log("error found");
+    return;
   }
 };
 

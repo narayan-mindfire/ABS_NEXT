@@ -32,11 +32,11 @@ abs-next/
 │   ├── const/          # constants
 │   ├── context/        # global state using context api
 │   ├── hooks/          # custom hooks used
-├   ├── types/          # types and interfaces
-├   ├── storage/        # local storage functions
-├   ├── utils/          # utility functions
-├   ├── storage/        # local storage functions
-├
+│   ├── types/          # types and interfaces
+│   ├── storage/        # local storage functions
+│   ├── utils/          # utility functions
+│   ├── storage/        # local storage functions
+│
 ├── middleware.ts       # Middleware for route protection
 ├── .env                # Environment variables
 ├── package.json        # Project metadata and scripts

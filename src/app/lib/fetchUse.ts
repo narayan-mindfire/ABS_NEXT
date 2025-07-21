@@ -28,6 +28,7 @@ export async function secureFetch(
   });
 
   if (res.status === 401 && attempt < 1) {
+    console.log("re-attempt");
     const refreshRes = await fetch(
       "http://localhost:5001/api/v1/auth/refresh-token",
       {
@@ -40,6 +41,7 @@ export async function secureFetch(
     );
 
     if (refreshRes.ok) {
+      console.log("Token refreshed successfully");
       return secureFetch(url, options, attempt + 1);
     }
   }
