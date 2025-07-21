@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ABS Next
+
+ABS Next is a modern web application designed to streamline business processes and enhance productivity. This documentation provides an overview of the application's structure, features, and setup instructions.
+
+## Table of Contents
+
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- Modular and scalable architecture
+- User authentication and authorization
+- RESTful API integration
+- Responsive UI with modern design
+- Role-based access control
+- SSR used wherever necessary to enhance search engine friendliness
+
+## Project Structure
+
+```
+abs-next/
+├── public/             # Static assets
+├── src/                # Application source code
+│   ├── app/            # Main application
+│   ├── components/     # Reusable components and utility components
+│   ├── const/          # constants
+│   ├── context/        # global state using context api
+│   ├── hooks/          # custom hooks used
+├   ├── types/          # types and interfaces
+├   ├── storage/        # local storage functions
+├   ├── utils/          # utility functions
+├   ├── storage/        # local storage functions
+├
+├── middleware.ts       # Middleware for route protection
+├── .env                # Environment variables
+├── package.json        # Project metadata and scripts
+└── README.md           # Project documentation
+```
 
 ## Getting Started
 
-First, run the development server:
+0. **Pre requisite**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- The application requires its backend(buit with node+express+mongoose) please refer:
+  `https://github.com/narayan-mindfire/ABS_BACKEND/blob/main/README.md`
+  to get started
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   git clone https://github.com/narayan-mindfire/ABS_NEXT.git
+   cd abs-next
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies:**
 
-## Learn More
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Run the development server:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Open the app:**
+   - Visit [http://localhost:3000](http://localhost:3000) in your browser.
