@@ -1,8 +1,10 @@
-import { JSX, useEffect } from "react";
+import { useEffect } from "react";
 import AppointmentCards from "./AppointmentCards";
 import Table from "./Table";
 import { useAppContext } from "../context/app.context";
 import { Appointment } from "@/types/stateTypes";
+import { faThLarge, faList } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AppointmentList = ({
   appointments,
@@ -11,8 +13,8 @@ const AppointmentList = ({
   appointments: Appointment[];
   userType: "patient" | "doctor" | "admin" | null;
 }) => {
+  console.log("appointments from list:", appointments);
   const { state, setState } = useAppContext();
-  const user = state.userType;
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sortValue = e.target.value;
     setState("sortAppointmentsBy", sortValue || null);
@@ -47,10 +49,18 @@ const AppointmentList = ({
               <option>Sort appointments (default)</option>
               <option value="date">Sort by date (closest first)</option>
               <option value="dateR">Sort by date (closest last)</option>
-              <option value="doctor">Sort by doctor name (A-Z)</option>
-              <option value="doctorR">Sort by doctor name (Z-A)</option>
-              <option value="name">Sort by patient name (A-Z)</option>
-              <option value="nameR">Sort by patient name (Z-A)</option>
+              {userType === "patient" && (
+                <option value="doctor">Sort by doctor name (A-Z)</option>
+              )}
+              {userType === "patient" && (
+                <option value="doctorR">Sort by doctor name (Z-A)</option>
+              )}
+              {userType === "doctor" && (
+                <option value="name">Sort by patient name (A-Z)</option>
+              )}
+              {userType === "doctor" && (
+                <option value="nameR">Sort by patient name (Z-A)</option>
+              )}
             </select>
             <button
               title="Grid view"
@@ -59,7 +69,7 @@ const AppointmentList = ({
               }`}
               onClick={() => handleGridViewToggle(true)}
             >
-              <i className="fas fa-th-large"></i>
+              <FontAwesomeIcon icon={faThLarge} />
             </button>
             <button
               title="List view"
@@ -68,7 +78,7 @@ const AppointmentList = ({
               }`}
               onClick={() => handleGridViewToggle(false)}
             >
-              <i className="fas fa-list"></i>
+              <FontAwesomeIcon icon={faList} />
             </button>
           </div>
         </div>

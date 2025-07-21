@@ -15,7 +15,7 @@ function AppointmentCards({
 }) {
   const { state } = useAppContext();
   const [appointments, setAppointments] = useState(initialAppointments);
-
+  console.log("appointments from cards: ", appointments);
   const sortedAppointments = state.sortAppointmentsBy
     ? sortAppointments(appointments, state.sortAppointmentsBy)
     : appointments;

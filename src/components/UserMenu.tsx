@@ -43,7 +43,7 @@ const UserMenu = () => {
         aria-expanded={open}
       >
         <FontAwesomeIcon icon={icon} className="text-xl text-gray-700" />
-        <span className="font-medium text-gray-700">Hi, {state.userName}</span>
+        {/* <span className="font-medium text-gray-700">Hi, {state.userName}</span> */}
       </button>
 
       {open && (

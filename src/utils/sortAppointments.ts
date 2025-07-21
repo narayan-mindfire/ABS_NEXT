@@ -10,6 +10,7 @@ function sortAppointments(
   appointments: Appointment[],
   sortBy: SortAppointmentsBy
 ): Appointment[] {
+  console.log("printing appointments", appointments);
   const sorted: Appointment[] = [...appointments];
 
   switch (sortBy) {

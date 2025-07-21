@@ -18,6 +18,7 @@ const Dashboard = async () => {
     }
 
     const appointments = await res.json();
+
     const userRes = await secureFetch("http://localhost:5001/api/v1/users/me");
 
     const user = await userRes.json();
