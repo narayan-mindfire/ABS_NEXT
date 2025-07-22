@@ -54,7 +54,7 @@ const TableRow: React.FC<TableRowProps> = memo(
         )}
       </tr>
     );
-  }
+  },
 );
 
 const AppointmentTable = ({
@@ -92,11 +92,11 @@ const AppointmentTable = ({
           {sortedAppointments.map((app) => {
             const handleEdit = useCallback(
               () => editAppointment(app),
-              [app, editAppointment]
+              [app, editAppointment],
             );
             const handleDelete = useCallback(
               () => deleteAppointment(app.id),
-              [app.id, deleteAppointment]
+              [app.id, deleteAppointment],
             );
 
             return (

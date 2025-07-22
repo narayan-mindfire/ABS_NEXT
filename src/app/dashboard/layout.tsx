@@ -100,7 +100,7 @@ export default function DashboardLayout({
                       "w-full text-left px-4 py-2 rounded-lg font-medium",
                       pathname === path
                         ? "bg-black text-white"
-                        : "text-gray-700 hover:bg-gray-100"
+                        : "text-gray-700 hover:bg-gray-100",
                     )}
                   >
                     {label}

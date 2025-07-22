@@ -8,7 +8,7 @@ import type { Appointment, SortAppointmentsBy } from "../types/stateTypes";
  */
 function sortAppointments(
   appointments: Appointment[],
-  sortBy: SortAppointmentsBy
+  sortBy: SortAppointmentsBy,
 ): Appointment[] {
   const sorted: Appointment[] = [...appointments];
   if (!sortBy) sortBy = "dateR";
@@ -21,22 +21,22 @@ function sortAppointments(
       break;
     case "doctor":
       sorted.sort((a, b) =>
-        a.doctor.toLowerCase().localeCompare(b.doctor.toLowerCase())
+        a.doctor.toLowerCase().localeCompare(b.doctor.toLowerCase()),
       );
       break;
     case "doctorR":
       sorted.sort((a, b) =>
-        b.doctor.toLowerCase().localeCompare(a.doctor.toLowerCase())
+        b.doctor.toLowerCase().localeCompare(a.doctor.toLowerCase()),
       );
       break;
     case "name":
       sorted.sort((a, b) =>
-        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
       );
       break;
     case "nameR":
       sorted.sort((a, b) =>
-        b.name.toLowerCase().localeCompare(a.name.toLowerCase())
+        b.name.toLowerCase().localeCompare(a.name.toLowerCase()),
       );
       break;
   }

@@ -12,7 +12,7 @@ interface InputProps {
   onChange: (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => void;
   placeholder?: string;
   error?: string;
@@ -86,7 +86,7 @@ const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             className={clsx(
               "w-full border rounded-md p-2 pr-10 focus:outline-none focus:ring-2 focus:black 500",
-              error && "border-red-500"
+              error && "border-red-500",
             )}
             min={min}
           />
