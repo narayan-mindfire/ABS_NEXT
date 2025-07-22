@@ -19,12 +19,11 @@ import axiosInstance from "@/app/lib/axiosInterceptor";
 import { logout } from "@/app/lib/logout";
 
 const ClientProfile = ({ user }: { user: User }) => {
-  const [currentUser, setUser] = useState<User | null>(user);
+  const [currentUser, setCurrentUser] = useState<User | null>(user);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [form, setForm] = useState<Partial<User>>(user || {});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const router = useRouter();
-
   const handleEdit = () => {
     if (currentUser) {
       setForm(currentUser);
@@ -47,8 +46,10 @@ const ClientProfile = ({ user }: { user: User }) => {
     e.preventDefault();
     try {
       const res = await axiosInstance.put("/users/me", form);
-      setUser(res.data);
+      setCurrentUser(res.data.user);
+      console.log(res.data.user);
       setEditModalOpen(false);
+      router.refresh();
     } catch (err) {
       console.error("Failed to update profile", err);
     }
@@ -62,8 +63,8 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto text-black px-4 py-0 ">
-      <div className="mx-auto bg-zinc-50 rounded-2xl py-0">
+    <div className="overflow-y-auto text-black px-4 py-0 ">
+      <div className="max-h-[80vh] overflow-y-auto mx-auto bg-zinc-50 rounded-2xl py-0">
         <div className="mb-4"></div>
 
         <div className="flex justify-between items-center mb-6">
@@ -105,7 +106,7 @@ const ClientProfile = ({ user }: { user: User }) => {
             Delete Profile
           </Button>
           <Button
-            className="w-full sm:w-auto"
+            className="w-full mb-15 sm:w-auto"
             onClick={async () => {
               await logout().then(() => router.replace("/"));
             }}

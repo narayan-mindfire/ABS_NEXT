@@ -17,6 +17,7 @@ const defaultState: State = {
   sortAppointmentsBy: null,
   userType: null,
   userName: null,
+  user: null,
 };
 
 interface AppContextType {
@@ -42,6 +43,7 @@ export function AppProvider({
       sortAppointmentsBy: loadData("sortAppointmentsBy", null),
       userType: loadData("userType", null),
       userName: loadData("userName", null),
+      user: loadData("user", null),
     };
     setInternalState(hydratedState);
   }, []);

@@ -16,7 +16,7 @@ export async function secureFetch(
     .getAll()
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
-  const res = await fetch(url, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}${url}`, {
     ...options,
     headers: {
       ...(options?.headers || {}),

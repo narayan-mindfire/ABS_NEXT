@@ -7,7 +7,7 @@ import AttemptRefresh from "../../../components/AttemptRefresh";
  * @returns Profile page component that fetches and displays user profile information.
  */
 const ProfilePage = async () => {
-  const res = await secureFetch("http://backend:5001/api/v1/users/me");
+  const res = await secureFetch("users/me");
 
   if (!res.ok) {
     return <AttemptRefresh redirectTo="/dashboard/profile" />;

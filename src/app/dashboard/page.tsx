@@ -9,14 +9,14 @@ import { secureFetch } from "../lib/fetchUse";
  */
 const Dashboard = async () => {
   try {
-    const res = await secureFetch("http://backend:5001/api/v1/appointments/me");
+    const res = await secureFetch("appointments/me");
     if (!res.ok) {
       return <AttemptRefresh redirectTo="/dashboard" />;
     }
 
     const appointments = await res.json();
 
-    const userRes = await secureFetch("http://backend:5001/api/v1/users/me");
+    const userRes = await secureFetch("users/me");
 
     const user = await userRes.json();
 

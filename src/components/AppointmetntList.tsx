@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import AppointmentCards from "./AppointmentCards";
-import Table from "./Table";
+import Table from "./AppointmentTable";
 import { useAppContext } from "../context/app.context";
 import { Appointment } from "@/types/stateTypes";
 import { faThLarge, faList } from "@fortawesome/free-solid-svg-icons";

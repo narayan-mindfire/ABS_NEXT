@@ -7,10 +7,6 @@ ABS Next is a modern web application designed to streamline business processes a
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Available Scripts](#available-scripts)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
