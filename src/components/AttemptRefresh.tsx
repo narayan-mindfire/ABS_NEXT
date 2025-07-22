@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axiosInstance from "../lib/axiosInterceptor";
+import axiosInstance from "@/app/lib/axiosInterceptor";
 
 export default function AttemptRefresh({ redirectTo }: { redirectTo: string }) {
   const router = useRouter();

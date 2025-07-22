@@ -37,6 +37,7 @@ const ClientProfile = ({ user }: { user: User }) => {
       await axiosInstance.delete("/users/me");
       await logout().then(() => router.replace("/"));
     } catch (error) {
+      console.log(error);
     } finally {
       setShowDeleteModal(false);
     }

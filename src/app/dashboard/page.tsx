@@ -1,6 +1,6 @@
+import AttemptRefresh from "../../components/AttemptRefresh";
 import ClientDashboard from "../../components/ClientDashboard";
 import { secureFetch } from "../lib/fetchUse";
-import AttemptRefresh from "../refresh/page";
 
 /**
  * dashboard page component that fetches and displays user appointments and profile information.
@@ -9,16 +9,14 @@ import AttemptRefresh from "../refresh/page";
  */
 const Dashboard = async () => {
   try {
-    const res = await secureFetch(
-      "http://localhost:5001/api/v1/appointments/me"
-    );
+    const res = await secureFetch("http://backend:5001/api/v1/appointments/me");
     if (!res.ok) {
       return <AttemptRefresh redirectTo="/dashboard" />;
     }
 
     const appointments = await res.json();
 
-    const userRes = await secureFetch("http://localhost:5001/api/v1/users/me");
+    const userRes = await secureFetch("http://backend:5001/api/v1/users/me");
 
     const user = await userRes.json();
 
@@ -26,7 +24,7 @@ const Dashboard = async () => {
       <ClientDashboard appointments={appointments} userType={user.user_type} />
     );
   } catch (err) {
-    console.log("error found");
+    console.log(err);
     return;
   }
 };

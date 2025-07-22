@@ -57,7 +57,9 @@ const Login = () => {
         setState("userType", res.data.user_type);
         setState("userName", res.data.user_name);
         router.replace("/dashboard");
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

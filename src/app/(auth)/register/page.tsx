@@ -10,6 +10,7 @@ import axiosInstance from "@/app/lib/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";
 import { validationConfig } from "@/const/const";
 import { FormFields } from "@/types/stateTypes";
+import axios from "axios";
 
 /**
  * Registration page component that allows users to create an account as a doctor or patient.
@@ -112,10 +113,10 @@ const Register = () => {
       setState("userName", res.data.user_name);
 
       router.replace("/dashboard");
-    } catch (error: any) {
-      const errMsg =
-        error.response?.data?.message || "Registration failed. Try again.";
-      alert(errMsg);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.message);
+      }
     } finally {
       setSubmitting(false);
     }

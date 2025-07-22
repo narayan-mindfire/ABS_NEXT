@@ -8,7 +8,6 @@ import Button from "@/components/Button";
 import UserMenu from "@/components/UserMenu";
 import clsx from "clsx";
 import { useState } from "react";
-import axiosInstance from "../lib/axiosInterceptor";
 
 const sidebarOptions = [
   { label: "Dashboard", path: "/dashboard" },

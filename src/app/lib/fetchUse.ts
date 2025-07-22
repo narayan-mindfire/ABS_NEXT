@@ -9,8 +9,7 @@ import { cookies } from "next/headers";
  */
 export async function secureFetch(
   url: string,
-  options?: RequestInit,
-  attempt = 0
+  options?: RequestInit
 ): Promise<Response> {
   const cookieStore = cookies();
   const cookieHeader = (await cookieStore)
@@ -26,25 +25,6 @@ export async function secureFetch(
     cache: "no-store",
     credentials: "include",
   });
-
-  if (res.status === 401 && attempt < 1) {
-    console.log("re-attempt");
-    const refreshRes = await fetch(
-      "http://localhost:5001/api/v1/auth/refresh-token",
-      {
-        method: "POST",
-        headers: {
-          Cookie: cookieHeader,
-        },
-        credentials: "include",
-      }
-    );
-
-    if (refreshRes.ok) {
-      console.log("Token refreshed successfully");
-      return secureFetch(url, options, attempt + 1);
-    }
-  }
 
   return res;
 }
