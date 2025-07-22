@@ -1,9 +1,10 @@
 "use client";
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useCallback, useEffect, useState } from "react";
 import { useAppContext } from "../context/app.context";
 import type { Appointment } from "../types/stateTypes";
 import { sortAppointments } from "@/utils/sortAppointments";
 import { useAppointmentActions } from "../hooks/useAppointmentActions";
+import { memo } from "react";
 import Button from "./Button";
 
 /**
@@ -24,41 +25,37 @@ interface TableRowProps {
   userType: "doctor" | "patient" | "admin" | null;
 }
 
-const TableRow: React.FC<TableRowProps> = ({
-  app,
-  isEditing,
-  onDelete,
-  onEdit,
-  userType,
-}) => {
-  return (
-    <tr
-      className={`${
-        isEditing ? "bg-gray-200 border-2 border-black" : ""
-      } hover:bg-gray-100`}
-    >
-      {userType === "doctor" && (
-        <td className="px-3 py-2 border-b border-gray-200">{app.name}</td>
-      )}
-      {userType === "patient" && (
-        <td className="px-3 py-2 border-b border-gray-200">{app.doctor}</td>
-      )}
-      <td className="px-3 py-2 border-b border-gray-200">{app.date}</td>
-      <td className="px-3 py-2 border-b border-gray-200">{app.slot}</td>
-      <td className="px-3 py-2 border-b border-gray-200">{app.purpose}</td>
-      {userType === "patient" && (
-        <td className="px-3 py-2 border-b border-gray-200 flex gap-1 md:gap-1 items-center">
-          <Button variant="default" className="w-full" onClick={onEdit}>
-            Edit
-          </Button>
-          <Button variant="danger" className="w-full" onClick={onDelete}>
-            Cancel
-          </Button>
-        </td>
-      )}
-    </tr>
-  );
-};
+const TableRow: React.FC<TableRowProps> = memo(
+  ({ app, isEditing, onDelete, onEdit, userType }) => {
+    return (
+      <tr
+        className={`${
+          isEditing ? "bg-gray-200 border-2 border-black" : ""
+        } hover:bg-gray-100`}
+      >
+        {userType === "doctor" && (
+          <td className="px-3 py-2 border-b border-gray-200">{app.name}</td>
+        )}
+        {userType === "patient" && (
+          <td className="px-3 py-2 border-b border-gray-200">{app.doctor}</td>
+        )}
+        <td className="px-3 py-2 border-b border-gray-200">{app.date}</td>
+        <td className="px-3 py-2 border-b border-gray-200">{app.slot}</td>
+        <td className="px-3 py-2 border-b border-gray-200">{app.purpose}</td>
+        {userType === "patient" && (
+          <td className="px-3 py-2 border-b border-gray-200 flex gap-1 md:gap-1 items-center">
+            <Button variant="default" className="w-full" onClick={onEdit}>
+              Edit
+            </Button>
+            <Button variant="danger" className="w-full" onClick={onDelete}>
+              Cancel
+            </Button>
+          </td>
+        )}
+      </tr>
+    );
+  }
+);
 
 const AppointmentTable = ({
   initialAppointments,
@@ -92,16 +89,27 @@ const AppointmentTable = ({
           </tr>
         </thead>
         <tbody className="text-sm">
-          {sortedAppointments.map((app) => (
-            <TableRow
-              key={app.id}
-              app={app}
-              isEditing={app.id === state.editingAppointmentId}
-              onEdit={() => editAppointment(app)}
-              onDelete={() => deleteAppointment(app.id)}
-              userType={userType}
-            />
-          ))}
+          {sortedAppointments.map((app) => {
+            const handleEdit = useCallback(
+              () => editAppointment(app),
+              [app, editAppointment]
+            );
+            const handleDelete = useCallback(
+              () => deleteAppointment(app.id),
+              [app.id, deleteAppointment]
+            );
+
+            return (
+              <TableRow
+                key={app.id}
+                app={app}
+                isEditing={app.id === state.editingAppointmentId}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                userType={userType}
+              />
+            );
+          })}
         </tbody>
       </table>
       {modal}
