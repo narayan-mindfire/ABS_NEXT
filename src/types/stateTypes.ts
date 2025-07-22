@@ -31,6 +31,7 @@ export interface State {
   appointments: Appointment[];
   userType: "doctor" | "patient" | "admin" | null;
   userName: string | null;
+  user: User | null;
 }
 
 export interface User {

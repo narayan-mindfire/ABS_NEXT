@@ -80,20 +80,22 @@ const AppointmentCard: React.FC<CardProps> = ({
           <div className="flex justify-evenly gap-2 mt-4 pt-4">
             <Button
               variant="default"
-              children={"Edit"}
               onClick={() => {
                 editAppointment(app);
               }}
               className="w-full"
               disabled={isOld(app.date, app.slot)}
-            />
+            >
+              Edit
+            </Button>
             <Button
               variant="danger"
-              children={"cancel"}
               onClick={() => deleteAppointment(app.id)}
               className="w-full"
               disabled={isOld(app.date, app.slot)}
-            />
+            >
+              Cancel
+            </Button>
           </div>
         )}
       </div>

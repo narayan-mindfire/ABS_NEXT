@@ -7,6 +7,7 @@ import { Slot, slots } from "../const/const";
 import { isOld } from "@/utils/isOld";
 import Modal from "./Modal";
 import axiosInstance from "@/app/lib/axiosInterceptor";
+import axios from "axios";
 type Props = {
   onClose: () => void;
   onSuccess: () => void;
@@ -28,6 +29,17 @@ interface FormState {
   status: string;
 }
 
+interface Doctor {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number?: string;
+  user_type: string;
+  specialization?: string;
+  bio?: string;
+}
+
 /**
  * AppointmentModal Component
  * @param param0 - Component properties including onClose, onSuccess callbacks and initialData for editing.
@@ -47,8 +59,8 @@ const AppointmentModal: React.FC<Props> = ({
   onSuccess,
   initialData,
 }) => {
-  const [doctors, setDoctors] = useState<any[]>([]);
-  const [filteredDoctors, setFilteredDoctors] = useState<any[]>([]);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>([]);
   const [searchText, setSearchText] = useState("");
 
   const [form, setForm] = useState<FormState>({
@@ -120,8 +132,12 @@ const AppointmentModal: React.FC<Props> = ({
       }
       onSuccess();
       onClose();
-    } catch (err: any) {
-      setApiError(err.response?.data?.message || "Something went wrong");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setApiError(err.response?.data?.message || "Something went wrong");
+      } else {
+        setApiError("Unexpected error");
+      }
     }
   };
 

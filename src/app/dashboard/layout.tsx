@@ -142,6 +142,34 @@ export default function DashboardLayout({
           </div>
           <UserMenu />
         </div>
+        <nav
+          className="flex text-gray-500 text-sm flex-1"
+          aria-label="Breadcrumb"
+        >
+          {pathname
+            .replace(/^\/|\/$/g, "")
+            .split("/")
+            .map((segment, idx, arr) => {
+              const path = "/" + arr.slice(0, idx + 1).join("/");
+              const isLast = idx === arr.length - 1;
+              return (
+                <span key={path} className="flex items-center">
+                  {idx > 0 && <span className="mx-1">{">"}</span>}
+                  {!isLast ? (
+                    <button
+                      className="hover:underline capitalize"
+                      onClick={() => router.push(path)}
+                      type="button"
+                    >
+                      {segment}
+                    </button>
+                  ) : (
+                    <span className="capitalize font-semibold">{segment}</span>
+                  )}
+                </span>
+              );
+            })}
+        </nav>
         {children}
       </div>
     </div>

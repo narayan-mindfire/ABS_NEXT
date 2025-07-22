@@ -7,10 +7,6 @@ ABS Next is a modern web application designed to streamline business processes a
 - [Features](#features)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Available Scripts](#available-scripts)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -32,11 +28,11 @@ abs-next/
 │   ├── const/          # constants
 │   ├── context/        # global state using context api
 │   ├── hooks/          # custom hooks used
-├   ├── types/          # types and interfaces
-├   ├── storage/        # local storage functions
-├   ├── utils/          # utility functions
-├   ├── storage/        # local storage functions
-├
+│   ├── types/          # types and interfaces
+│   ├── storage/        # local storage functions
+│   ├── utils/          # utility functions
+│   ├── storage/        # local storage functions
+│
 ├── middleware.ts       # Middleware for route protection
 ├── .env                # Environment variables
 ├── package.json        # Project metadata and scripts
