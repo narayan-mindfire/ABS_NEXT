@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
  */
 export async function secureFetch(
   url: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<Response> {
   const cookieStore = cookies();
   const cookieHeader = (await cookieStore)

@@ -1,4 +1,6 @@
 "use client";
+
+import { memo } from "react";
 import type { Appointment } from "../types/stateTypes";
 import { useAppointmentActions } from "../hooks/useAppointmentActions";
 import Button from "./Button";
@@ -105,4 +107,4 @@ const AppointmentCard: React.FC<CardProps> = ({
   );
 };
 
-export default AppointmentCard;
+export default memo(AppointmentCard);

@@ -48,7 +48,7 @@ const Button: FC<ButtonProps> = ({
         baseVariants[variant],
         !isSelected && hoverStyles[variant],
         selectedStyles,
-        className
+        className,
       )}
       disabled={disabled}
       {...props}

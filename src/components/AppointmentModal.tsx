@@ -83,7 +83,7 @@ const AppointmentModal: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -165,10 +165,10 @@ const AppointmentModal: React.FC<Props> = ({
               initialData
                 ? initialData.doctor
                 : form.doctor_id
-                ? doctors.find((d) => d._id === form.doctor_id)?.first_name +
-                  " " +
-                  doctors.find((d) => d._id === form.doctor_id)?.last_name
-                : searchText
+                  ? doctors.find((d) => d._id === form.doctor_id)?.first_name +
+                    " " +
+                    doctors.find((d) => d._id === form.doctor_id)?.last_name
+                  : searchText
             }
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -177,7 +177,7 @@ const AppointmentModal: React.FC<Props> = ({
               const filtered = doctors.filter((doc) =>
                 `${doc.first_name} ${doc.last_name}`
                   .toLowerCase()
-                  .includes(query)
+                  .includes(query),
               );
               setFilteredDoctors(filtered);
             }}
