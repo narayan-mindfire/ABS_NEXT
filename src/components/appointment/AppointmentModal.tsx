@@ -5,7 +5,7 @@ import Input from "../generic/Input";
 import { Slot, slots } from "@/const/const";
 import { isOld } from "@/utils/isOld";
 import Modal from "../generic/Modal";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
 type Props = {
   onClose: () => void;

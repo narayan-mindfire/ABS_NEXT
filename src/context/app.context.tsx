@@ -6,6 +6,7 @@ import {
   useEffect,
   type ReactNode,
   type JSX,
+  useCallback,
 } from "react";
 import { loadData, saveData } from "../storage/app.storage";
 import type { State } from "../types/stateTypes";
@@ -48,13 +49,16 @@ export function AppProvider({
     setInternalState(hydratedState);
   }, []);
 
-  const setState = <K extends keyof State>(key: K, value: State[K]) => {
-    setInternalState((prev) => {
-      const updated = { ...prev, [key]: value };
-      saveData(key, value);
-      return updated;
-    });
-  };
+  const setState = useCallback(
+    <K extends keyof State>(key: K, value: State[K]) => {
+      setInternalState((prev) => {
+        const updated = { ...prev, [key]: value };
+        saveData(key, value);
+        return updated;
+      });
+    },
+    [],
+  );
 
   return (
     <AppContext.Provider value={{ state, setState }}>

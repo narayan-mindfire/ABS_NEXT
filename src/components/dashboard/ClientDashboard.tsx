@@ -5,7 +5,7 @@ import AppointmentList from "@/components/appointment/AppointmetntList";
 import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 
 type Props = {
   appointments: Appointment[];
@@ -27,9 +27,10 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
   const { setState } = useAppContext();
 
   useEffect(() => {
+    console.log("running");
     setState("appointments", appointments);
     setState("userType", userType);
-  }, [appointments, userType]);
+  }, [appointments, userType, setState]);
 
   return (
     <div className="min-h-screen flex bg-gray-50 relative overflow-x-hidden">

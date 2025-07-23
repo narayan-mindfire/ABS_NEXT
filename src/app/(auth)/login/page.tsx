@@ -4,7 +4,7 @@ import { useState } from "react";
 import Input from "@/components/generic/Input";
 import Button from "@/components/generic/Button";
 import Link from "next/link";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";
 import { useRouter } from "next/navigation";
 

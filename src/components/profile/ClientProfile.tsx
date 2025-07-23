@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EditProfileForm from "@/components/profile/EditProfileForm";
 import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 import { logout } from "@/app/lib/logout";
 import ProfileDetails from "./ProfileDetails";
 import Modal from "../generic/Modal";

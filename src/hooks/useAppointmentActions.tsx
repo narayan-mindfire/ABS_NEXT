@@ -2,7 +2,7 @@
 import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
 import type { Appointment } from "../types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
 import AppointmentModal from "@/components/appointment/AppointmentModal";
 import Modal from "@/components/generic/Modal";

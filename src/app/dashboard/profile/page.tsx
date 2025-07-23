@@ -1,21 +1,19 @@
 import ClientProfile from "@/components/profile/ClientProfile";
-import { secureFetch } from "@/app/lib/fetchUse";
 import AttemptRefresh from "@/components/utility/AttemptRefresh";
-
+import { serverAxios } from "@/app/services/serverAxiosInterceptor";
+import { User } from "@/types/stateTypes";
 /**
  * Profile page component that fetches and displays user profile information.
  * @returns Profile page component that fetches and displays user profile information.
  */
 const ProfilePage = async () => {
-  const res = await secureFetch("users/me");
-
-  if (!res.ok) {
+  try {
+    const res = await serverAxios<User>("users/me");
+    return <ClientProfile user={res} />;
+  } catch (error: unknown) {
+    console.error("Failed to fetch user profile:", error);
     return <AttemptRefresh redirectTo="/dashboard/profile" />;
   }
-
-  const user = await res.json();
-
-  return <ClientProfile user={user} />;
 };
 
 export default ProfilePage;
