@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
-import { useAppContext } from "../context/app.context";
-import { sortAppointments } from "../utils/sortAppointments";
-import type { Appointment } from "../types/stateTypes";
+import { useAppContext } from "../../context/app.context";
+import { sortAppointments } from "../../utils/sortAppointments";
+import type { Appointment } from "../../types/stateTypes";
 
 /**
  * Component to display a list of appointment cards.

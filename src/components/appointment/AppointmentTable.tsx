@@ -1,11 +1,11 @@
 "use client";
 import React, { JSX, useCallback, useEffect, useState } from "react";
-import { useAppContext } from "../context/app.context";
-import type { Appointment } from "../types/stateTypes";
+import { useAppContext } from "../../context/app.context";
+import type { Appointment } from "../../types/stateTypes";
 import { sortAppointments } from "@/utils/sortAppointments";
-import { useAppointmentActions } from "../hooks/useAppointmentActions";
+import { useAppointmentActions } from "../../hooks/useAppointmentActions";
 import { memo } from "react";
-import Button from "./Button";
+import Button from "../generic/Button";
 
 /**
  * TableRow Component
@@ -54,8 +54,9 @@ const TableRow: React.FC<TableRowProps> = memo(
         )}
       </tr>
     );
-  },
+  }
 );
+TableRow.displayName = "TableRow";
 
 const AppointmentTable = ({
   initialAppointments,
@@ -90,14 +91,8 @@ const AppointmentTable = ({
         </thead>
         <tbody className="text-sm">
           {sortedAppointments.map((app) => {
-            const handleEdit = useCallback(
-              () => editAppointment(app),
-              [app, editAppointment],
-            );
-            const handleDelete = useCallback(
-              () => deleteAppointment(app.id),
-              [app.id, deleteAppointment],
-            );
+            const handleEdit = () => editAppointment(app);
+            const handleDelete = () => deleteAppointment(app.id);
 
             return (
               <TableRow

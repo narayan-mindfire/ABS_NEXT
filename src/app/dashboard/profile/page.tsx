@@ -1,6 +1,6 @@
-import ClientProfile from "@/components/ClientProfile";
+import ClientProfile from "@/components/profile/ClientProfile";
 import { secureFetch } from "@/app/lib/fetchUse";
-import AttemptRefresh from "../../../components/AttemptRefresh";
+import AttemptRefresh from "@/components/utility/AttemptRefresh";
 
 /**
  * Profile page component that fetches and displays user profile information.

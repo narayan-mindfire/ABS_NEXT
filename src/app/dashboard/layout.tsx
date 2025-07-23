@@ -2,10 +2,9 @@
 
 import { useAppContext } from "@/context/app.context";
 import { usePathname, useRouter } from "next/navigation";
-import { logout } from "@/app/lib/logout";
 import { Menu, X } from "lucide-react";
-import Button from "@/components/Button";
-import UserMenu from "@/components/UserMenu";
+import Button from "@/components/generic/Button";
+import UserMenu from "@/components/dashboard/UserMenu";
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -39,7 +38,7 @@ export default function DashboardLayout({
 
   return (
     <div className="max-h-[90vh] overflow-hidden flex bg-gray-50 relative overflow-x-hidden">
-      <div className="hidden md:flex w-64 shadow-md p-6 flex-col justify-between">
+      <div className="hidden md:flex w-64 shadow-md p-6 flex-col bg-zinc-300 h-screen justify-between">
         <div className="space-y-6">
           <div>
             <p className="text-gray-800 font-semibold text-lg">
@@ -47,7 +46,7 @@ export default function DashboardLayout({
             </p>
             <p className="text-gray-500 text-sm">Welcome!</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 pt-6">
             {sidebarOptions.map(({ label, path }) => (
               <Button
                 key={label}
@@ -61,21 +60,11 @@ export default function DashboardLayout({
             ))}
           </div>
         </div>
-        <div className="pt-6 border-t border-gray-200">
-          <button
-            onClick={async () => {
-              await logout().then(() => router.replace("/"));
-            }}
-            className="w-full text-left px-4 py-2 rounded-lg text-red-600 hover:bg-gray-100 font-medium"
-          >
-            Logout
-          </button>
-        </div>
       </div>
 
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black/30 bg-opacity-30 md:hidden">
-          <div className="absolute left-0 top-0 h-full w-64 bg-zinc-200 shadow-md p-6 flex flex-col justify-between animate-slide-in">
+          <div className="absolute left-0 top-0 h-full w-64 bg-zinc-300 shadow-md p-6 flex flex-col  justify-between animate-slide-in">
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <div>
@@ -100,7 +89,7 @@ export default function DashboardLayout({
                       "w-full text-left px-4 py-2 rounded-lg font-medium",
                       pathname === path
                         ? "bg-black text-white"
-                        : "text-gray-700 hover:bg-gray-100",
+                        : "text-gray-700 hover:bg-gray-100"
                     )}
                   >
                     {label}
@@ -108,22 +97,12 @@ export default function DashboardLayout({
                 ))}
               </div>
             </div>
-            <div className="pt-6 border-t border-gray-200">
-              <button
-                onClick={async () => {
-                  await logout().then(() => router.replace("/"));
-                }}
-                className="w-full text-left px-4 py-2 rounded-lg text-red-600 hover:bg-gray-100 font-medium"
-              >
-                Logout
-              </button>
-            </div>
           </div>
         </div>
       )}
 
-      <div className="flex-1 px-4 py-6 w-full">
-        <div className="flex justify-between items-center mb-6">
+      <div className="flex-1 px-0 pt-0 pb-6 w-full">
+        <div className="flex justify-between bg-zinc-300 px-4 pt-6 pb-6 items-center mb-6">
           <div className="flex items-center gap-4">
             <button
               className="md:hidden p-2 rounded hover:bg-gray-200"
@@ -143,7 +122,7 @@ export default function DashboardLayout({
           <UserMenu />
         </div>
         <nav
-          className="flex text-gray-500 text-sm flex-1"
+          className="flex text-gray-500 text-sm ps-4 flex-1"
           aria-label="Breadcrumb"
         >
           {pathname

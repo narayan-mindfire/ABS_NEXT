@@ -1,10 +1,10 @@
 "use client";
 
 import { memo } from "react";
-import type { Appointment } from "../types/stateTypes";
-import { useAppointmentActions } from "../hooks/useAppointmentActions";
-import Button from "./Button";
-import { isOld } from "../utils/isOld";
+import type { Appointment } from "../../types/stateTypes";
+import { useAppointmentActions } from "../../hooks/useAppointmentActions";
+import Button from "../generic/Button";
+import { isOld } from "../../utils/isOld";
 
 interface CardProps {
   app: Appointment;

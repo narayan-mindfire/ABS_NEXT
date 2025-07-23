@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import Button from "@/components/Button";
+import Button from "@/components/generic/Button";
 
 /**
  * Unauthenticated page component that displays a message indicating the user is not logged in.

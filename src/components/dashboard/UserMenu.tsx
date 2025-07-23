@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "@/context/app.context";
 import { logout } from "@/app/lib/logout";
-import Button from "./Button";
+import Button from "../generic/Button";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ const UserMenu = () => {
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex mr-5 items-center gap-3 px-4 py-2 rounded-full hover:bg-gray-100 transition-all border border-gray-200 shadow-sm"
+        className="flex mr-5 items-center gap-3 px-4 py-2 rounded-full bg-gray-100 transition-all border border-gray-200 shadow-sm"
         aria-haspopup="true"
         aria-expanded={open}
       >

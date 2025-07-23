@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import Button from "@/components/Button";
+import Button from "@/components/generic/Button";
 
 /**
  * Unauthorized page component that displays a message indicating the user does not have permission to view the page.

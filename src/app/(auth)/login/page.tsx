@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import Input from "@/components/generic/Input";
+import Button from "@/components/generic/Button";
 import Link from "next/link";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";

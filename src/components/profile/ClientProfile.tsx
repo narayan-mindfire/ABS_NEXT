@@ -10,13 +10,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditProfileForm from "@/components/EditProfileForm";
-import ProfileDetails from "@/components/ProfileDetails";
-import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import EditProfileForm from "@/components/profile/EditProfileForm";
+import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import { logout } from "@/app/lib/logout";
+import ProfileDetails from "./ProfileDetails";
+import Modal from "../generic/Modal";
 
 const ClientProfile = ({ user }: { user: User }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(user);
@@ -56,7 +56,7 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));

@@ -10,7 +10,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className="min-h-screen flex flex-col">
         <AppProvider>
-          <main className="flex-grow">{children}</main>
+          <main>{children}</main>
         </AppProvider>
 
         <footer className="text-center text-xs text-gray-500 py-6 border-t border-gray-200">

@@ -1,4 +1,4 @@
-import { User } from "../types/stateTypes";
+import { User } from "@/types/stateTypes";
 /**
  * ProfileDetails component displays user profile information.
  * @param param0 - Component properties.

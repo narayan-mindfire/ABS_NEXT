@@ -1,11 +1,11 @@
-import { User } from "../types/stateTypes";
-import Button from "./Button";
+import { User } from "../../types/stateTypes";
+import Button from "../generic/Button";
 
 interface Props {
   form: Partial<User>;
   userType: "doctor" | "patient";
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   onClose: () => void;
   onSubmit: (e: React.FormEvent) => void;

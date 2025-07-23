@@ -1,5 +1,5 @@
-import AttemptRefresh from "../../components/AttemptRefresh";
-import ClientDashboard from "../../components/ClientDashboard";
+import AttemptRefresh from "@/components/utility/AttemptRefresh";
+import ClientDashboard from "../../components/dashboard/ClientDashboard";
 import { secureFetch } from "../lib/fetchUse";
 
 /**

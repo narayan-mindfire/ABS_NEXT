@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
+import Input from "@/components/generic/Input";
+import Button from "@/components/generic/Button";
 import Link from "next/link";
 import { validationService } from "@/utils/validationService";
 import { useRouter } from "next/navigation";
@@ -51,7 +51,7 @@ const Register = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -83,7 +83,7 @@ const Register = () => {
         ) {
           tempErrors[key as keyof FormFields] = `${key.replace(
             /_/g,
-            " ",
+            " "
           )} is invalid`;
           valid = false;
           break;
