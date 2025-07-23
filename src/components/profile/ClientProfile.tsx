@@ -56,7 +56,6 @@ const ClientProfile = ({ user }: { user: User }) => {
     try {
       const res = await axiosInstance.put("/users/me", form);
       setCurrentUser(res.data.user);
-      console.log(res.data.user);
       setEditModalOpen(false);
       router.refresh();
     } catch (err) {
@@ -65,7 +64,7 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));

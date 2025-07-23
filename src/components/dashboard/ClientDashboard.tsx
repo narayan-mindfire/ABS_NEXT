@@ -27,7 +27,6 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
   const { setState } = useAppContext();
 
   useEffect(() => {
-    console.log("running");
     setState("appointments", appointments);
     setState("userType", userType);
   }, [appointments, userType, setState]);
