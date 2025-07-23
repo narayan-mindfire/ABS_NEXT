@@ -82,7 +82,7 @@ const AppointmentModal: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -176,7 +176,7 @@ const AppointmentModal: React.FC<Props> = ({
               const filtered = doctors.filter((doc) =>
                 `${doc.first_name} ${doc.last_name}`
                   .toLowerCase()
-                  .includes(query)
+                  .includes(query),
               );
               setFilteredDoctors(filtered);
             }}

@@ -52,7 +52,7 @@ export function useAppointmentActions() {
         onConfirm={handleConfirm}
         confirmText="Confirm"
         cancelText="Cancel"
-      />
+      />,
     );
   }
 
@@ -77,7 +77,7 @@ export function useAppointmentActions() {
           status: appointment.status,
           doctor: appointment.doctor,
         }}
-      />
+      />,
     );
   }
 
