@@ -3,12 +3,12 @@ import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
 import type { Appointment } from "../types/stateTypes";
 import axiosInstance from "@/app/services/axiosInterceptor";
-import axios from "axios";
+import { useAsyncHandler } from "./useAsyncHandler";
 import dynamic from "next/dynamic";
 
 const AppointmentModal = dynamic(
   () => import("@/components/appointment/AppointmentModal"),
-  { loading: () => <p>Loading form...</p> },
+  { loading: () => <p>Loading form...</p> }
 );
 
 const Modal = dynamic(() => import("@/components/generic/Modal"), {
@@ -30,23 +30,20 @@ const Modal = dynamic(() => import("@/components/generic/Modal"), {
 export function useAppointmentActions() {
   const { state, setState } = useAppContext();
   const [modal, setModal] = useState<null | JSX.Element>(null);
+  const { run: runDelete, loading: deleting } = useAsyncHandler<void>();
+  const { run: runFetch, loading: fetching } = useAsyncHandler<Appointment[]>();
 
   function deleteAppointment(id: number) {
     const handleConfirm = async () => {
       try {
-        await axiosInstance.delete(`/appointments/${id}`);
-
+        await runDelete(axiosInstance.delete(`/appointments/${id}`));
         const updated = state.appointments.filter((app) => app.id !== id);
+        console.log(updated);
         setState("appointments", updated);
         setModal(null);
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          console.error("Failed to delete appointment:", error);
-          alert("Failed to delete appointment");
-        } else {
-          console.error("Unexpected error:", error);
-          alert("Something went wrong");
-        }
+      } catch (err) {
+        alert("Failed to delete appointment");
+        console.error(err);
       }
     };
 
@@ -60,17 +57,20 @@ export function useAppointmentActions() {
         onConfirm={handleConfirm}
         confirmText="Confirm"
         cancelText="Cancel"
-      />,
+      />
     );
   }
 
   function editAppointment(appointment: Appointment) {
     const handleClose = () => setModal(null);
-    const handleSuccess = () => {
+    const handleSuccess = async () => {
       setModal(null);
-      axiosInstance
-        .get("/appointments/me")
-        .then((res) => setState("appointments", res.data));
+      try {
+        const res = await runFetch(axiosInstance.get("/appointments/me"));
+        setState("appointments", res.data);
+      } catch {
+        alert("Failed to refresh appointments");
+      }
     };
 
     setModal(
@@ -85,7 +85,7 @@ export function useAppointmentActions() {
           status: appointment.status,
           doctor: appointment.doctor,
         }}
-      />,
+      />
     );
   }
 
@@ -93,5 +93,7 @@ export function useAppointmentActions() {
     deleteAppointment,
     editAppointment,
     modal,
+    deleting,
+    fetching,
   };
 }
