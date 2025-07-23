@@ -26,6 +26,5 @@ export async function serverAxios<T>(
     withCredentials: true,
     ...options,
   });
-  console.log(res.data);
   return res.data;
 }

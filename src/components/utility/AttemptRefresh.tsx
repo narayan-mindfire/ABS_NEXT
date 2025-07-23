@@ -10,10 +10,8 @@ export default function AttemptRefresh({ redirectTo }: { redirectTo: string }) {
   useEffect(() => {
     (async () => {
       try {
-        console.log("refreshing session");
         const res = await axiosInstance.post("auth/refresh-token");
         if (res.status >= 200 && res.status < 300) {
-          console.log("redirecting to::", redirectTo);
           router.replace(redirectTo);
         } else {
           router.replace("/login");

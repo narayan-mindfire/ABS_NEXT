@@ -56,7 +56,6 @@ const ClientProfile = ({ user }: { user: User }) => {
     try {
       const res = await axiosInstance.put("/users/me", form);
       setCurrentUser(res.data.user);
-      console.log(res.data.user);
       setEditModalOpen(false);
       router.refresh();
     } catch (err) {
