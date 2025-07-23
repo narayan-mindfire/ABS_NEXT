@@ -18,6 +18,15 @@ import { logout } from "@/app/lib/logout";
 import ProfileDetails from "./ProfileDetails";
 import Modal from "../generic/Modal";
 
+/**
+ * Renders the client profile page which includes profile information,
+ * editing capability, profile deletion, and logout functionality.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {User} props.user - The initial user data used to populate the profile
+ * @returns {JSX.Element} A React component that displays and manages the user's profile
+ */
 const ClientProfile = ({ user }: { user: User }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(user);
   const [editModalOpen, setEditModalOpen] = useState(false);
