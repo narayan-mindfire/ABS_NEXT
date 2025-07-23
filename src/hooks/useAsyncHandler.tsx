@@ -17,7 +17,7 @@ export function useAsyncHandler<T>() {
       setError(
         typeof err === "object" && err !== null && "message" in err
           ? (err as { message: string }).message
-          : "Unknown error"
+          : "Unknown error",
       );
       throw err;
     } finally {
