@@ -10,13 +10,28 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditProfileForm from "@/components/profile/EditProfileForm";
+// import EditProfileForm from "@/components/profile/EditProfileForm";
 import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
 import axiosInstance from "@/app/services/axiosInterceptor";
 import { logout } from "@/app/lib/logout";
 import ProfileDetails from "./ProfileDetails";
-import Modal from "../generic/Modal";
+import dynamic from "next/dynamic";
+
+// lazy loading not critical components
+const EditProfileForm = dynamic(
+  () => import("@/components/profile/EditProfileForm"),
+  {
+    loading: () => {
+      console.log("loading form");
+      return <p>Loading form...</p>;
+    },
+  },
+);
+
+const Modal = dynamic(() => import("../generic/Modal"), {
+  loading: () => <p>Loading modal...</p>,
+});
 
 /**
  * Renders the client profile page which includes profile information,

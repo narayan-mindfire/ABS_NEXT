@@ -4,8 +4,16 @@ import { useState, type JSX } from "react";
 import type { Appointment } from "../types/stateTypes";
 import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
-import AppointmentModal from "@/components/appointment/AppointmentModal";
-import Modal from "@/components/generic/Modal";
+import dynamic from "next/dynamic";
+
+const AppointmentModal = dynamic(
+  () => import("@/components/appointment/AppointmentModal"),
+  { loading: () => <p>Loading form...</p> },
+);
+
+const Modal = dynamic(() => import("@/components/generic/Modal"), {
+  loading: () => <p>Loading modal...</p>,
+});
 
 /**
  * Custom React hook to manage appointment-related actions such as deleting or editing appointments.

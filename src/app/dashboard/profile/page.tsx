@@ -1,7 +1,16 @@
 import ClientProfile from "@/components/profile/ClientProfile";
-import AttemptRefresh from "@/components/utility/AttemptRefresh";
 import { serverAxios } from "@/app/services/serverAxiosInterceptor";
 import { User } from "@/types/stateTypes";
+import dynamic from "next/dynamic";
+const AttemptRefresh = dynamic(
+  () => import("../../../components/utility/AttemptRefresh"),
+  {
+    loading: () => {
+      return <p>loading page</p>;
+    },
+  },
+);
+
 /**
  * Profile page component that fetches and displays user profile information.
  * @returns Profile page component that fetches and displays user profile information.

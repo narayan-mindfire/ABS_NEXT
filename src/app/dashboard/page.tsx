@@ -1,7 +1,17 @@
-import AttemptRefresh from "@/components/utility/AttemptRefresh";
 import ClientDashboard from "../../components/dashboard/ClientDashboard";
 import { serverAxios } from "../services/serverAxiosInterceptor";
 import { Appointment, User } from "@/types/stateTypes";
+import dynamic from "next/dynamic";
+
+const AttemptRefresh = dynamic(
+  () => import("../../components/utility/AttemptRefresh"),
+  {
+    loading: () => {
+      return <p>loading page</p>;
+    },
+  },
+);
+
 /**
  * dashboard page component that fetches and displays user appointments and profile information.
  * It uses the  function to handle authentication and data retrieval.
