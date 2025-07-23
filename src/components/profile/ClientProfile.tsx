@@ -56,15 +56,15 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="overflow-y-auto text-black px-4 py-0 ">
-      <div className="max-h-[80vh] overflow-y-auto mx-auto bg-zinc-50 rounded-2xl py-0">
+    <div className="overflow-y-auto text-black px-4 py-0">
+      <div className="max-h-[80vh] overflow-y-auto mx-auto bg-zinc-50 py-0">
         <div className="mb-4"></div>
 
         <div className="flex justify-between items-center mb-6">
@@ -96,7 +96,7 @@ const ClientProfile = ({ user }: { user: User }) => {
           />
         )}
 
-        <div className="border-t mt-30 pt-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <div className="border-t my-30 md:mb-40 pt-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
           <Button
             className="w-full sm:w-auto"
             onClick={() => setShowDeleteModal(true)}
@@ -106,7 +106,7 @@ const ClientProfile = ({ user }: { user: User }) => {
             Delete Profile
           </Button>
           <Button
-            className="w-full mb-15 sm:w-auto"
+            className="w-full sm:w-auto"
             onClick={async () => {
               await logout().then(() => router.replace("/"));
             }}
