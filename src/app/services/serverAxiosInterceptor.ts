@@ -6,7 +6,7 @@ import axios, { AxiosRequestConfig } from "axios";
  */
 export async function serverAxios<T>(
   url: string,
-  options?: AxiosRequestConfig
+  options?: AxiosRequestConfig,
 ): Promise<T> {
   const cookieStore = cookies();
   const cookieHeader = (await cookieStore)
