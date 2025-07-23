@@ -6,7 +6,7 @@ import Button from "@/components/generic/Button";
 import Link from "next/link";
 import { validationService } from "@/utils/validationService";
 import { useRouter } from "next/navigation";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 import { useAppContext } from "@/context/app.context";
 import { validationConfig } from "@/const/const";
 import { FormFields } from "@/types/stateTypes";

@@ -5,7 +5,7 @@ import AppointmentList from "@/components/appointment/AppointmetntList";
 import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axiosInstance from "@/app/services/axiosInterceptor";
 
 type Props = {
   appointments: Appointment[];

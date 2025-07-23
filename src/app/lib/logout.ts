@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInterceptor";
+import axiosInstance from "../services/axiosInterceptor";
 
 /**
  * Logs out the user by calling the logout API endpoint and clearing local storage.
