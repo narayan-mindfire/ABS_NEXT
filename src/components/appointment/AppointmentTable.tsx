@@ -1,5 +1,5 @@
 "use client";
-import React, { JSX, useCallback, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { useAppContext } from "../../context/app.context";
 import type { Appointment } from "../../types/stateTypes";
 import { sortAppointments } from "@/utils/sortAppointments";
@@ -54,7 +54,7 @@ const TableRow: React.FC<TableRowProps> = memo(
         )}
       </tr>
     );
-  },
+  }
 );
 TableRow.displayName = "TableRow";
 

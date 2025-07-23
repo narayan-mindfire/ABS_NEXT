@@ -27,9 +27,10 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
   const { setState } = useAppContext();
 
   useEffect(() => {
+    console.log("running");
     setState("appointments", appointments);
     setState("userType", userType);
-  }, [appointments, userType]);
+  }, [appointments, userType, setState]);
 
   return (
     <div className="min-h-screen flex bg-gray-50 relative overflow-x-hidden">
