@@ -31,8 +31,8 @@ function AppointmentCards({
     setAppointments(state.appointments || []);
   }, [state.appointments]);
   return (
-    <div className="w-full max-h-[65vh] max-w-7xl mx-auto p-2 md:p-6 bg-white rounded-[10px] overflow-y-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-5">
+    <div className="w-full max-h-[65vh] max-w-7xl mx-auto p-2 md:p-6 bg-white rounded-[10px] overflow-y-auto pb-25 md-pb-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-5 sm:pb-30">
         {sortedAppointments.map((app) => (
           <AppointmentCard
             key={app.id}
