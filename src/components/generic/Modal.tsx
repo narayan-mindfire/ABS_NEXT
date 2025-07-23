@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "./Button";
-
 interface ModalProps {
   title?: string;
   onClose: () => void;

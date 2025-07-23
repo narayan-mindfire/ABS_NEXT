@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Button from "../components/Button";
-import Input from "../components/Input";
-
-import { Slot, slots } from "../const/const";
+import Button from "../generic/Button";
+import Input from "../generic/Input";
+import { Slot, slots } from "@/const/const";
 import { isOld } from "@/utils/isOld";
-import Modal from "./Modal";
+import Modal from "../generic/Modal";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import axios from "axios";
 type Props = {

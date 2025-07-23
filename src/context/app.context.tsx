@@ -34,7 +34,7 @@ export function AppProvider({
 }): JSX.Element {
   const [state, setInternalState] = useState<State>(defaultState);
 
-  // 🟡 Load from localStorage only after client-side mount
+  // Load from localStorage only after client-side mount
   useEffect(() => {
     const hydratedState: State = {
       appointments: loadData("appointments", []),

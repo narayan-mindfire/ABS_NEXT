@@ -1,5 +1,5 @@
-import Button from "@/components/Button";
-import DisplayCard from "@/components/DisplayCard";
+import Button from "@/components/generic/Button";
+import DisplayCard from "@/components/others/DisplayCard";
 import Link from "next/link";
 import {
   faCalendarCheck,

@@ -1,5 +1,5 @@
-import { User } from "../types/stateTypes";
-import Button from "./Button";
+import { User } from "../../types/stateTypes";
+import Button from "../generic/Button";
 
 interface Props {
   form: Partial<User>;

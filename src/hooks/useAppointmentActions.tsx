@@ -1,11 +1,11 @@
 "use client";
 import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
-import Modal from "../components/Modal";
 import type { Appointment } from "../types/stateTypes";
-import AppointmentModal from "@/components/AppointmentModal";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import axios from "axios";
+import AppointmentModal from "@/components/appointment/AppointmentModal";
+import Modal from "@/components/generic/Modal";
 
 /**
  * Custom React hook to manage appointment-related actions such as deleting or editing appointments.

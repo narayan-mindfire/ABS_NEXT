@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import AppointmentModal from "@/components/AppointmentModal";
-import AppointmentList from "@/components/AppointmetntList";
-import Button from "@/components/Button";
+import AppointmentModal from "../appointment/AppointmentModal";
+import AppointmentList from "@/components/appointment/AppointmetntList";
+import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
 import axiosInstance from "@/app/lib/axiosInterceptor";
@@ -40,7 +40,7 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
             <Button
               onClick={() => setShowModal(true)}
               variant="default"
-              className="h-14 md:h-10"
+              className="h-13 md:h-14 w-30 md:w-45"
             >
               + Create Appointment
             </Button>

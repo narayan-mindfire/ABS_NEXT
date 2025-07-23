@@ -10,14 +10,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditProfileForm from "@/components/EditProfileForm";
-import ProfileDetails from "@/components/ProfileDetails";
-import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import EditProfileForm from "@/components/profile/EditProfileForm";
+import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
 import axiosInstance from "@/app/lib/axiosInterceptor";
 import { logout } from "@/app/lib/logout";
+import ProfileDetails from "./ProfileDetails";
+import Modal from "../generic/Modal";
 
+/**
+ * Renders the client profile page which includes profile information,
+ * editing capability, profile deletion, and logout functionality.
+ *
+ * @component
+ * @param {Object} props - The component props
+ * @param {User} props.user - The initial user data used to populate the profile
+ * @returns {JSX.Element} A React component that displays and manages the user's profile
+ */
 const ClientProfile = ({ user }: { user: User }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(user);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -63,8 +72,8 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   return (
-    <div className="overflow-y-auto text-black px-4 py-0 ">
-      <div className="max-h-[80vh] overflow-y-auto mx-auto bg-zinc-50 rounded-2xl py-0">
+    <div className="overflow-y-auto text-black px-4 py-0">
+      <div className="max-h-[80vh] overflow-y-auto mx-auto bg-zinc-50 py-0">
         <div className="mb-4"></div>
 
         <div className="flex justify-between items-center mb-6">
@@ -96,7 +105,7 @@ const ClientProfile = ({ user }: { user: User }) => {
           />
         )}
 
-        <div className="border-t mt-30 pt-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <div className="border-t my-30 md:mb-40 pt-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
           <Button
             className="w-full sm:w-auto"
             onClick={() => setShowDeleteModal(true)}
@@ -106,7 +115,7 @@ const ClientProfile = ({ user }: { user: User }) => {
             Delete Profile
           </Button>
           <Button
-            className="w-full mb-15 sm:w-auto"
+            className="w-full sm:w-auto"
             onClick={async () => {
               await logout().then(() => router.replace("/"));
             }}
