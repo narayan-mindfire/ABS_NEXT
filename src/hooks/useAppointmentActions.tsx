@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 
 const AppointmentModal = dynamic(
   () => import("@/components/appointment/AppointmentModal"),
-  { loading: () => <p>Loading form...</p> }
+  { loading: () => <p>Loading form...</p> },
 );
 
 const Modal = dynamic(() => import("@/components/generic/Modal"), {
@@ -60,7 +60,7 @@ export function useAppointmentActions() {
         onConfirm={handleConfirm}
         confirmText="Confirm"
         cancelText="Cancel"
-      />
+      />,
     );
   }
 
@@ -85,7 +85,7 @@ export function useAppointmentActions() {
           status: appointment.status,
           doctor: appointment.doctor,
         }}
-      />
+      />,
     );
   }
 

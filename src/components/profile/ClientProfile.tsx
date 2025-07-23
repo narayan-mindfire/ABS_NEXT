@@ -26,7 +26,7 @@ const EditProfileForm = dynamic(
       console.log("loading form");
       return <p>Loading form...</p>;
     },
-  }
+  },
 );
 
 const Modal = dynamic(() => import("../generic/Modal"), {
@@ -79,7 +79,7 @@ const ClientProfile = ({ user }: { user: User }) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));

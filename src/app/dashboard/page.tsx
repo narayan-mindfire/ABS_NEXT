@@ -9,7 +9,7 @@ const AttemptRefresh = dynamic(
     loading: () => {
       return <p>loading page</p>;
     },
-  }
+  },
 );
 
 /**
