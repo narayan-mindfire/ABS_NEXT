@@ -5,8 +5,11 @@ import Input from "../generic/Input";
 import { Slot, slots } from "@/const/const";
 import { isOld } from "@/utils/isOld";
 import Modal from "../generic/Modal";
-import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
+import { createAppointmentAction } from "@/app/actions/createAppointmentAction";
+import { updateAppointmentAction } from "@/app/actions/updateAppointmentAction";
+import { getSlotAction } from "@/app/actions/getSlotAction";
+import { getDoctorAction } from "@/app/actions/getDoctorAction";
 
 type Props = {
   onClose: () => void;
@@ -74,10 +77,9 @@ const AppointmentModal: React.FC<Props> = ({
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/users", { params: { user_type: "doctor" } })
-      .then((res) => setDoctors(res.data))
-      .catch(() => setApiError("Failed to load doctors"));
+    getDoctorAction().then(({ data }) => {
+      if (data) setDoctors(data);
+    });
   }, []);
 
   const handleChange = (
@@ -91,15 +93,18 @@ const AppointmentModal: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchBookedSlots = async () => {
+      console.log("fetching booked slots");
       if (!form.doctor_id || !form.slot_date) return;
       try {
-        const res = await axiosInstance.get("/slots/doctor", {
-          params: {
-            doctor_id: form.doctor_id,
-            slot_date: form.slot_date,
-          },
+        const { data, error } = await getSlotAction({
+          doctor_id: form.doctor_id,
+          slot_date: form.slot_date,
         });
-        setBookedSlots(res.data);
+        if (data) {
+          setBookedSlots(data);
+        } else if (error) {
+          console.error(error);
+        }
       } catch (err) {
         console.error("Failed to fetch booked slots", err);
       }
@@ -135,12 +140,14 @@ const AppointmentModal: React.FC<Props> = ({
 
     try {
       if (initialData) {
-        await axiosInstance.put(`/appointments/${initialData.id}`, form);
-      } else {
-        await axiosInstance.post("/appointments", {
-          ...form,
-          doctor_id: form.doctor_id,
+        await updateAppointmentAction({
+          appointment_id: initialData.id,
+          form,
         });
+      } else {
+        if (form.doctor_id) {
+          createAppointmentAction({ ...form, doctor_id: form.doctor_id });
+        }
       }
       onSuccess();
       onClose();

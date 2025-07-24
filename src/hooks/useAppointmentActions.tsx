@@ -2,9 +2,12 @@
 import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
 import type { Appointment } from "../types/stateTypes";
-import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
 import dynamic from "next/dynamic";
+import {
+  deleteAppointmentAction,
+  getAppointmentsAction,
+} from "@/app/actions/getAppointmentAction";
 
 const AppointmentModal = dynamic(
   () => import("@/components/appointment/AppointmentModal"),
@@ -34,8 +37,7 @@ export function useAppointmentActions() {
   function deleteAppointment(id: number) {
     const handleConfirm = async () => {
       try {
-        await axiosInstance.delete(`/appointments/${id}`);
-
+        await deleteAppointmentAction(id);
         const updated = state.appointments.filter((app) => app.id !== id);
         setState("appointments", updated);
         setModal(null);
@@ -68,9 +70,13 @@ export function useAppointmentActions() {
     const handleClose = () => setModal(null);
     const handleSuccess = () => {
       setModal(null);
-      axiosInstance
-        .get("/appointments/me")
-        .then((res) => setState("appointments", res.data));
+      getAppointmentsAction().then((res) => {
+        if (Array.isArray(res)) {
+          setState("appointments", res);
+        } else {
+          console.error("Failed to fetch appointments:", res.error);
+        }
+      });
     };
 
     setModal(

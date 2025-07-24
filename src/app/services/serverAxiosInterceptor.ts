@@ -1,3 +1,4 @@
+"use server";
 import { cookies } from "next/headers";
 import axios, { AxiosRequestConfig } from "axios";
 
@@ -9,10 +10,7 @@ export async function serverAxios<T>(
   options?: AxiosRequestConfig,
 ): Promise<T> {
   const cookieStore = cookies();
-  const cookieHeader = (await cookieStore)
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
+  const cookieHeader = (await cookieStore).toString();
 
   const res = await axios.request<T>({
     baseURL:

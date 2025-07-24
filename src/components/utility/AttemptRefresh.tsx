@@ -2,24 +2,15 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axiosInstance from "@/app/services/axiosInterceptor";
+import { refreshAction } from "@/app/actions/refreshAction";
 
 export default function AttemptRefresh({ redirectTo }: { redirectTo: string }) {
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      try {
-        const res = await axiosInstance.post("auth/refresh-token");
-        if (res.status >= 200 && res.status < 300) {
-          router.replace(redirectTo);
-        } else {
-          router.replace("/login");
-        }
-      } catch (err) {
-        console.error("Refresh error:", err);
-        router.replace("/login");
-      }
+      const { success } = await refreshAction();
+      router.replace(success ? redirectTo : "/login");
     })();
   }, [redirectTo, router]);
 

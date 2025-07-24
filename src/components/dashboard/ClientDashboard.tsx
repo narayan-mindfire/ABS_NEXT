@@ -5,8 +5,8 @@ import AppointmentList from "@/components/appointment/AppointmetntList";
 import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
-import axiosInstance from "@/app/services/axiosInterceptor";
 import { ToastContainer, toast } from "react-toastify";
+import { getAppointmentsAction } from "@/app/actions/getAppointmentAction";
 
 type Props = {
   appointments: Appointment[];
@@ -54,9 +54,14 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
           <AppointmentModal
             onClose={() => setShowModal(false)}
             onSuccess={async () => {
-              const res = await axiosInstance("/appointments/me");
-              setState("appointments", res.data);
-              toast("appointment creation successful", { theme: "dark" });
+              getAppointmentsAction().then((res) => {
+                if (Array.isArray(res)) {
+                  setState("appointments", res);
+                } else {
+                  console.error("Failed to fetch appointments:", res.error);
+                  toast("appointment creation successful", { theme: "dark" });
+                }
+              });
             }}
           />
         )}

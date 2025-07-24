@@ -13,17 +13,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import EditProfileForm from "@/components/profile/EditProfileForm";
 import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
-import axiosInstance from "@/app/services/axiosInterceptor";
-import { logout } from "@/app/lib/logout";
 import ProfileDetails from "./ProfileDetails";
 import dynamic from "next/dynamic";
+import { deleteUserAction } from "@/app/actions/deleteUserAction";
+import { updateUserAction } from "@/app/actions/updateUserAction";
+import { logoutAction } from "@/app/actions/logoutAction";
 
 // lazy loading not critical components
 const EditProfileForm = dynamic(
   () => import("@/components/profile/EditProfileForm"),
   {
     loading: () => {
-      console.log("loading form");
       return <p>Loading form...</p>;
     },
   },
@@ -57,8 +57,8 @@ const ClientProfile = ({ user }: { user: User }) => {
 
   const confirmDelete = async () => {
     try {
-      await axiosInstance.delete("/users/me");
-      await logout().then(() => router.replace("/"));
+      await deleteUserAction();
+      await logoutAction().then(() => router.replace("/"));
     } catch (error) {
       console.log(error);
     } finally {
@@ -69,10 +69,13 @@ const ClientProfile = ({ user }: { user: User }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.put("/users/me", form);
-      setCurrentUser(res.data.user);
-      setEditModalOpen(false);
-      router.refresh();
+      const res = await updateUserAction(form);
+      if ("user" in res) {
+        setCurrentUser(res.user);
+        setEditModalOpen(false);
+      } else {
+        alert(res.error);
+      }
     } catch (err) {
       console.error("Failed to update profile", err);
     }
@@ -131,7 +134,7 @@ const ClientProfile = ({ user }: { user: User }) => {
           <Button
             className="w-full sm:w-auto"
             onClick={async () => {
-              await logout().then(() => router.replace("/"));
+              await logoutAction().then(() => router.replace("/"));
             }}
             variant="outline"
           >
