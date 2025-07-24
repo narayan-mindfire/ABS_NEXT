@@ -1,10 +1,19 @@
 import { useEffect } from "react";
-import AppointmentCards from "./AppointmentCards";
-import Table from "./AppointmentTable";
-import { useAppContext } from "../../context/app.context";
-import { Appointment } from "@/types/stateTypes";
+import dynamic from "next/dynamic";
 import { faThLarge, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { Appointment } from "@/types/stateTypes";
+
+import { useAppContext } from "../../context/app.context";
+
+const AppointmentCards = dynamic(() => import("./AppointmentCards"), {
+  loading: () => <p>Loading cards...</p>,
+});
+
+const Table = dynamic(() => import("./AppointmentTable"), {
+  loading: () => <p>Loading table...</p>,
+});
 
 /**
  *

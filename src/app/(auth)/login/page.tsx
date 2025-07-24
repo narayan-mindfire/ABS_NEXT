@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/generic/Input";
-import Button from "@/components/generic/Button";
 import Link from "next/link";
-import axiosInstance from "@/app/lib/axiosInterceptor";
-import { useAppContext } from "@/context/app.context";
 import { useRouter } from "next/navigation";
+
+import { useAppContext } from "@/context/app.context";
+import Button from "@/components/generic/Button";
+import Input from "@/components/generic/Input";
+import { loginAction } from "@/app/actions/loginAction";
 
 /**
  * Login page that allows users to log in with their email and password.
@@ -50,15 +51,14 @@ const Login = () => {
     e.preventDefault();
     if (validate()) {
       try {
-        const res = await axiosInstance.post("/auth/login", {
-          email,
-          password,
-        });
-        setState("userType", res.data.user_type);
-        setState("userName", res.data.user_name);
+        const { data } = await loginAction({ email, password });
+        if (data) {
+          setState("userType", data.user_type);
+          setState("userName", data.user_name);
+        }
         router.replace("/dashboard");
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     }
   };

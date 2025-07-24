@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/generic/Input";
-import Button from "@/components/generic/Button";
 import Link from "next/link";
-import { validationService } from "@/utils/validationService";
 import { useRouter } from "next/navigation";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+import axios from "axios";
+
+import Button from "@/components/generic/Button";
+import Input from "@/components/generic/Input";
 import { useAppContext } from "@/context/app.context";
+import { validationService } from "@/utils/validationService";
 import { validationConfig } from "@/const/const";
 import { FormFields } from "@/types/stateTypes";
-import axios from "axios";
+import { registerAction } from "@/app/actions/registerAction";
 
 /**
  * Registration page component that allows users to create an account as a doctor or patient.
@@ -107,12 +108,16 @@ const Register = () => {
 
     setSubmitting(true);
     try {
-      const res = await axiosInstance.post("/auth/register", form);
-
-      setState("userType", res.data.user_type);
-      setState("userName", res.data.user_name);
-
-      router.replace("/dashboard");
+      const { data, error } = await registerAction(form);
+      if (error) {
+        alert(error);
+        return;
+      }
+      if (data) {
+        setState("userType", data.user_type);
+        setState("userName", data.user_name);
+        router.replace("/dashboard");
+      }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         alert(error.message);

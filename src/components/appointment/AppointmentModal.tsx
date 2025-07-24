@@ -1,12 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Button from "../generic/Button";
-import Input from "../generic/Input";
+import axios from "axios";
+
+import { createAppointmentAction } from "@/app/actions/createAppointmentAction";
+import { updateAppointmentAction } from "@/app/actions/updateAppointmentAction";
+import { getSlotAction } from "@/app/actions/getSlotAction";
+import { getDoctorAction } from "@/app/actions/getDoctorAction";
 import { Slot, slots } from "@/const/const";
 import { isOld } from "@/utils/isOld";
+
+import Button from "../generic/Button";
+import Input from "../generic/Input";
 import Modal from "../generic/Modal";
-import axiosInstance from "@/app/lib/axiosInterceptor";
-import axios from "axios";
+
 type Props = {
   onClose: () => void;
   onSuccess: () => void;
@@ -68,15 +74,16 @@ const AppointmentModal: React.FC<Props> = ({
     purpose: initialData?.purpose || "",
     status: initialData?.status || "Pending",
   });
-  const [errors, setErrors] = useState<{ [K in keyof FormState]?: string }>({});
+  const [errors, setErrors] = useState<{ [_K in keyof FormState]?: string }>(
+    {},
+  );
   const [apiError, setApiError] = useState("");
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/users", { params: { user_type: "doctor" } })
-      .then((res) => setDoctors(res.data))
-      .catch(() => setApiError("Failed to load doctors"));
+    getDoctorAction().then(({ data }) => {
+      if (data) setDoctors(data);
+    });
   }, []);
 
   const handleChange = (
@@ -92,23 +99,37 @@ const AppointmentModal: React.FC<Props> = ({
     const fetchBookedSlots = async () => {
       if (!form.doctor_id || !form.slot_date) return;
       try {
-        const res = await axiosInstance.get("/slots/doctor", {
-          params: {
-            doctor_id: form.doctor_id,
-            slot_date: form.slot_date,
-          },
+        const { data, error } = await getSlotAction({
+          doctor_id: form.doctor_id,
+          slot_date: form.slot_date,
         });
-        setBookedSlots(res.data);
+        if (data) {
+          setBookedSlots(data);
+        } else if (error) {
+          throw error;
+        }
       } catch (err) {
-        console.error("Failed to fetch booked slots", err);
+        throw err;
       }
     };
 
     fetchBookedSlots();
   }, [form.doctor_id, form.slot_date]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const query = searchText.toLowerCase();
+      const filtered = doctors.filter((doc) =>
+        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query),
+      );
+      setFilteredDoctors(filtered);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchText, doctors]);
+
   const validate = () => {
-    const tempErrors: { [K in keyof FormState]?: string } = {};
+    const tempErrors: { [_K in keyof FormState]?: string } = {};
     if (!form.slot_date) tempErrors.slot_date = "Please select a date";
     if (!form.slot_time) tempErrors.slot_time = "Please select a time";
     if (!form.purpose.trim()) tempErrors.purpose = "Purpose is required";
@@ -122,12 +143,14 @@ const AppointmentModal: React.FC<Props> = ({
 
     try {
       if (initialData) {
-        await axiosInstance.put(`/appointments/${initialData.id}`, form);
-      } else {
-        await axiosInstance.post("/appointments", {
-          ...form,
-          doctor_id: form.doctor_id,
+        await updateAppointmentAction({
+          appointment_id: initialData.id,
+          form,
         });
+      } else {
+        if (form.doctor_id) {
+          createAppointmentAction({ ...form, doctor_id: form.doctor_id });
+        }
       }
       onSuccess();
       onClose();
@@ -172,32 +195,27 @@ const AppointmentModal: React.FC<Props> = ({
             onChange={(e) => {
               setSearchText(e.target.value);
               setForm((prev) => ({ ...prev, doctor_id: "" }));
-              const query = e.target.value.toLowerCase();
-              const filtered = doctors.filter((doc) =>
-                `${doc.first_name} ${doc.last_name}`
-                  .toLowerCase()
-                  .includes(query),
-              );
-              setFilteredDoctors(filtered);
             }}
           />
-          {filteredDoctors.length > 0 && (
-            <ul className="absolute z-50 w-full bg-white border mt-1 rounded shadow-md max-h-60 overflow-auto">
-              {filteredDoctors.map((doc) => (
-                <li
-                  key={doc._id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setForm((prev) => ({ ...prev, doctor_id: doc._id }));
-                    setSearchText(`Dr. ${doc.first_name} ${doc.last_name}`);
-                    setFilteredDoctors([]);
-                  }}
-                >
-                  Dr. {doc.first_name} {doc.last_name} ({doc.specialization})
-                </li>
-              ))}
-            </ul>
-          )}
+          {!initialData &&
+            searchText.trim() !== "" &&
+            filteredDoctors.length > 0 && (
+              <ul className="absolute z-50 w-full bg-white border mt-1 rounded shadow-md max-h-60 overflow-auto">
+                {filteredDoctors.map((doc) => (
+                  <li
+                    key={doc._id}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setForm((prev) => ({ ...prev, doctor_id: doc._id }));
+                      setSearchText(`Dr. ${doc.first_name} ${doc.last_name}`);
+                      setFilteredDoctors([]);
+                    }}
+                  >
+                    Dr. {doc.first_name} {doc.last_name} ({doc.specialization})
+                  </li>
+                ))}
+              </ul>
+            )}
           {errors.doctor_id && (
             <p className="text-red-500 text-xs mt-1">{errors.doctor_id}</p>
           )}

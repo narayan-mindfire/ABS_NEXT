@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+
 import Button from "@/components/generic/Button";
 
 /**

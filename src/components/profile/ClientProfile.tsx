@@ -2,21 +2,36 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faPenToSquare,
   faTrash,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditProfileForm from "@/components/profile/EditProfileForm";
 import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
-import { logout } from "@/app/lib/logout";
+import { deleteUserAction } from "@/app/actions/deleteUserAction";
+import { updateUserAction } from "@/app/actions/updateUserAction";
+import { logoutAction } from "@/app/actions/logoutAction";
+
 import ProfileDetails from "./ProfileDetails";
-import Modal from "../generic/Modal";
+
+// lazy loading not critical components
+const EditProfileForm = dynamic(
+  () => import("@/components/profile/EditProfileForm"),
+  {
+    loading: () => {
+      return <p>Loading form...</p>;
+    },
+  },
+);
+
+const Modal = dynamic(() => import("../generic/Modal"), {
+  loading: () => <p>Loading modal...</p>,
+});
 
 /**
  * Renders the client profile page which includes profile information,
@@ -42,10 +57,9 @@ const ClientProfile = ({ user }: { user: User }) => {
 
   const confirmDelete = async () => {
     try {
-      await axiosInstance.delete("/users/me");
-      await logout().then(() => router.replace("/"));
-    } catch (error) {
-      console.log(error);
+      await deleteUserAction();
+      await logoutAction().then(() => router.replace("/"));
+    } catch {
     } finally {
       setShowDeleteModal(false);
     }
@@ -54,13 +68,15 @@ const ClientProfile = ({ user }: { user: User }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.put("/users/me", form);
-      setCurrentUser(res.data.user);
-      console.log(res.data.user);
-      setEditModalOpen(false);
-      router.refresh();
+      const res = await updateUserAction(form);
+      if ("user" in res) {
+        setCurrentUser(res.user);
+        setEditModalOpen(false);
+      } else {
+        alert(res.error);
+      }
     } catch (err) {
-      console.error("Failed to update profile", err);
+      throw err;
     }
   };
 
@@ -117,7 +133,7 @@ const ClientProfile = ({ user }: { user: User }) => {
           <Button
             className="w-full sm:w-auto"
             onClick={async () => {
-              await logout().then(() => router.replace("/"));
+              await logoutAction().then(() => router.replace("/"));
             }}
             variant="outline"
           >

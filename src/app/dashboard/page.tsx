@@ -1,31 +1,36 @@
-import AttemptRefresh from "@/components/utility/AttemptRefresh";
+import dynamic from "next/dynamic";
+
+import { Appointment, User } from "@/types/stateTypes";
+
 import ClientDashboard from "../../components/dashboard/ClientDashboard";
-import { secureFetch } from "../lib/fetchUse";
+import { serverAxios } from "../services/serverAxiosInterceptor";
+
+const AttemptRefresh = dynamic(
+  () => import("../../components/utility/AttemptRefresh"),
+  {
+    loading: () => {
+      return <p>loading page</p>;
+    },
+  },
+);
 
 /**
  * dashboard page component that fetches and displays user appointments and profile information.
- * It uses the secureFetch function to handle authentication and data retrieval.
+ * It uses the  function to handle authentication and data retrieval.
  * @returns Dashboard page component that fetches and displays user appointments and profile information.
  */
 const Dashboard = async () => {
   try {
-    const res = await secureFetch("appointments/me");
-    if (!res.ok) {
-      return <AttemptRefresh redirectTo="/dashboard" />;
-    }
-
-    const appointments = await res.json();
-
-    const userRes = await secureFetch("users/me");
-
-    const user = await userRes.json();
-
+    const appointments = await serverAxios<Appointment[]>("appointments/me");
+    const userRes = await serverAxios<User>("users/me");
     return (
-      <ClientDashboard appointments={appointments} userType={user.user_type} />
+      <ClientDashboard
+        appointments={appointments}
+        userType={userRes.user_type}
+      />
     );
-  } catch (err) {
-    console.log(err);
-    return;
+  } catch {
+    return <AttemptRefresh redirectTo="/dashboard" />;
   }
 };
 

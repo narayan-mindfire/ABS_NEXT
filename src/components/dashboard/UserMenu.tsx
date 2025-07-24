@@ -10,8 +10,10 @@ import {
   faUser,
   faGear,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { useAppContext } from "@/context/app.context";
-import { logout } from "@/app/lib/logout";
+import { logoutAction } from "@/app/actions/logoutAction";
+
 import Button from "../generic/Button";
 
 const UserMenu = () => {
@@ -81,7 +83,7 @@ const UserMenu = () => {
 
           <button
             onClick={async () => {
-              await logout().then(() => router.replace("/"));
+              await logoutAction().then(() => router.replace("/"));
             }}
             className="flex items-center w-full gap-2 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
           >

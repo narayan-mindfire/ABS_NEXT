@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+
 import type { Appointment } from "../../types/stateTypes";
 import { useAppointmentActions } from "../../hooks/useAppointmentActions";
 import Button from "../generic/Button";

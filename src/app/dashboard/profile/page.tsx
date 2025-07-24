@@ -1,21 +1,29 @@
+import dynamic from "next/dynamic";
+
+import { serverAxios } from "@/app/services/serverAxiosInterceptor";
 import ClientProfile from "@/components/profile/ClientProfile";
-import { secureFetch } from "@/app/lib/fetchUse";
-import AttemptRefresh from "@/components/utility/AttemptRefresh";
+import { User } from "@/types/stateTypes";
+
+const AttemptRefresh = dynamic(
+  () => import("../../../components/utility/AttemptRefresh"),
+  {
+    loading: () => {
+      return <p>loading page</p>;
+    },
+  },
+);
 
 /**
  * Profile page component that fetches and displays user profile information.
  * @returns Profile page component that fetches and displays user profile information.
  */
 const ProfilePage = async () => {
-  const res = await secureFetch("users/me");
-
-  if (!res.ok) {
+  try {
+    const res = await serverAxios<User>("users/me");
+    return <ClientProfile user={res} />;
+  } catch {
     return <AttemptRefresh redirectTo="/dashboard/profile" />;
   }
-
-  const user = await res.json();
-
-  return <ClientProfile user={user} />;
 };
 
 export default ProfilePage;

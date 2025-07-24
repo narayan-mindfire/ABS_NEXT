@@ -6,7 +6,9 @@ import {
   useEffect,
   type ReactNode,
   type JSX,
+  useCallback,
 } from "react";
+
 import { loadData, saveData } from "../storage/app.storage";
 import type { State } from "../types/stateTypes";
 
@@ -22,7 +24,7 @@ const defaultState: State = {
 
 interface AppContextType {
   state: State;
-  setState: <K extends keyof State>(key: K, value: State[K]) => void;
+  setState: <K extends keyof State>(_key: K, _value: State[K]) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -48,13 +50,16 @@ export function AppProvider({
     setInternalState(hydratedState);
   }, []);
 
-  const setState = <K extends keyof State>(key: K, value: State[K]) => {
-    setInternalState((prev) => {
-      const updated = { ...prev, [key]: value };
-      saveData(key, value);
-      return updated;
-    });
-  };
+  const setState = useCallback(
+    <K extends keyof State>(key: K, value: State[K]) => {
+      setInternalState((prev) => {
+        const updated = { ...prev, [key]: value };
+        saveData(key, value);
+        return updated;
+      });
+    },
+    [],
+  );
 
   return (
     <AppContext.Provider value={{ state, setState }}>

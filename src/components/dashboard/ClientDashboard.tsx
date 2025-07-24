@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import AppointmentModal from "../appointment/AppointmentModal";
+import { ToastContainer, toast } from "react-toastify";
+
+import { getAppointmentsAction } from "@/app/actions/getAppointmentAction";
 import AppointmentList from "@/components/appointment/AppointmetntList";
 import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
+
+import AppointmentModal from "../appointment/AppointmentModal";
 
 type Props = {
   appointments: Appointment[];
@@ -29,7 +32,7 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
   useEffect(() => {
     setState("appointments", appointments);
     setState("userType", userType);
-  }, [appointments, userType]);
+  }, [appointments, userType, setState]);
 
   return (
     <div className="min-h-screen flex bg-gray-50 relative overflow-x-hidden">
@@ -53,11 +56,17 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
           <AppointmentModal
             onClose={() => setShowModal(false)}
             onSuccess={async () => {
-              const res = await axiosInstance("/appointments/me");
-              setState("appointments", res.data);
+              getAppointmentsAction().then((res) => {
+                if (Array.isArray(res)) {
+                  setState("appointments", res);
+                } else {
+                  toast("appointment creation successful", { theme: "dark" });
+                }
+              });
             }}
           />
         )}
+        <ToastContainer />
       </div>
     </div>
   );

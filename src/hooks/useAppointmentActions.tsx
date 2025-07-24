@@ -1,11 +1,24 @@
 "use client";
-import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
-import type { Appointment } from "../types/stateTypes";
-import axiosInstance from "@/app/lib/axiosInterceptor";
 import axios from "axios";
-import AppointmentModal from "@/components/appointment/AppointmentModal";
-import Modal from "@/components/generic/Modal";
+import dynamic from "next/dynamic";
+
+import {
+  deleteAppointmentAction,
+  getAppointmentsAction,
+} from "@/app/actions/getAppointmentAction";
+
+import { useAppContext } from "../context/app.context";
+import type { Appointment } from "../types/stateTypes";
+
+const AppointmentModal = dynamic(
+  () => import("@/components/appointment/AppointmentModal"),
+  { loading: () => <p>Loading form...</p> },
+);
+
+const Modal = dynamic(() => import("@/components/generic/Modal"), {
+  loading: () => <p>Loading modal...</p>,
+});
 
 /**
  * Custom React hook to manage appointment-related actions such as deleting or editing appointments.
@@ -26,17 +39,14 @@ export function useAppointmentActions() {
   function deleteAppointment(id: number) {
     const handleConfirm = async () => {
       try {
-        await axiosInstance.delete(`/appointments/${id}`);
-
+        await deleteAppointmentAction(id);
         const updated = state.appointments.filter((app) => app.id !== id);
         setState("appointments", updated);
         setModal(null);
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-          console.error("Failed to delete appointment:", error);
           alert("Failed to delete appointment");
         } else {
-          console.error("Unexpected error:", error);
           alert("Something went wrong");
         }
       }
@@ -60,9 +70,11 @@ export function useAppointmentActions() {
     const handleClose = () => setModal(null);
     const handleSuccess = () => {
       setModal(null);
-      axiosInstance
-        .get("/appointments/me")
-        .then((res) => setState("appointments", res.data));
+      getAppointmentsAction().then((res) => {
+        if (Array.isArray(res)) {
+          setState("appointments", res);
+        }
+      });
     };
 
     setModal(
