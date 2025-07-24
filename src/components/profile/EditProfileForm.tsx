@@ -5,7 +5,7 @@ interface Props {
   form: Partial<User>;
   userType: "doctor" | "patient";
   onChange: (
-    _e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    _e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   onClose: () => void;
   onSubmit: (_e: React.FormEvent) => void;

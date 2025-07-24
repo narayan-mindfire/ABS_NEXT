@@ -7,7 +7,7 @@ export const logoutAction = async () => {
       {},
       {
         withCredentials: true,
-      }
+      },
     );
     localStorage.clear();
   } catch (err) {

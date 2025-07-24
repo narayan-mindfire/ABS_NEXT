@@ -58,7 +58,7 @@ export function AppProvider({
         return updated;
       });
     },
-    []
+    [],
   );
 
   return (

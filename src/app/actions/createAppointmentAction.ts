@@ -5,7 +5,7 @@ import { Appointment } from "@/types/stateTypes";
 
 // Define the type for the form input if it's not exactly Appointment
 export async function createAppointmentAction(
-  form: Partial<Appointment> & { doctor_id: string }
+  form: Partial<Appointment> & { doctor_id: string },
 ) {
   try {
     const response = await serverAxios("/appointments", {

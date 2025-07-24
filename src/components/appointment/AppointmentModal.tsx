@@ -75,7 +75,7 @@ const AppointmentModal: React.FC<Props> = ({
     status: initialData?.status || "Pending",
   });
   const [errors, setErrors] = useState<{ [_K in keyof FormState]?: string }>(
-    {}
+    {},
   );
   const [apiError, setApiError] = useState("");
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
@@ -89,7 +89,7 @@ const AppointmentModal: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -120,7 +120,7 @@ const AppointmentModal: React.FC<Props> = ({
     const timeout = setTimeout(() => {
       const query = searchText.toLowerCase();
       const filtered = doctors.filter((doc) =>
-        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query)
+        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query),
       );
       setFilteredDoctors(filtered);
     }, 500);

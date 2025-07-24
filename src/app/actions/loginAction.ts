@@ -21,7 +21,7 @@ export async function loginAction(input: LoginInput): Promise<{
       input,
       {
         withCredentials: true,
-      }
+      },
     );
 
     return { data: response.data };

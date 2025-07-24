@@ -52,7 +52,7 @@ const Register = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -84,7 +84,7 @@ const Register = () => {
         ) {
           tempErrors[key as keyof FormFields] = `${key.replace(
             /_/g,
-            " "
+            " ",
           )} is invalid`;
           valid = false;
           break;

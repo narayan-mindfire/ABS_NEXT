@@ -4,7 +4,7 @@ import { serverAxios } from "@/app/services/serverAxiosInterceptor";
 import { Appointment } from "@/types/stateTypes";
 
 export async function deleteAppointmentAction(
-  id: number
+  id: number,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     await serverAxios(`/appointments/${id}`, {

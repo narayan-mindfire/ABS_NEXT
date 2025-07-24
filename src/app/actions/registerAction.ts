@@ -22,7 +22,7 @@ export async function registerAction(input: FormFields): Promise<{
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return { data };

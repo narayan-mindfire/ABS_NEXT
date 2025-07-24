@@ -55,7 +55,7 @@ const TableRow: React.FC<TableRowProps> = memo(
         )}
       </tr>
     );
-  }
+  },
 );
 TableRow.displayName = "TableRow";
 
