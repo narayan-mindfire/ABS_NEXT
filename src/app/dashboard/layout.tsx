@@ -1,12 +1,13 @@
 "use client";
 
-import { useAppContext } from "@/context/app.context";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import clsx from "clsx";
 import { Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+
+import { useAppContext } from "@/context/app.context";
 import Button from "@/components/generic/Button";
 import UserMenu from "@/components/dashboard/UserMenu";
-import clsx from "clsx";
-import { useState } from "react";
 
 const sidebarOptions = [
   { label: "Dashboard", path: "/dashboard" },
@@ -89,7 +90,7 @@ export default function DashboardLayout({
                       "w-full text-left px-4 py-2 rounded-lg font-medium",
                       pathname === path
                         ? "bg-black text-white"
-                        : "text-gray-700 hover:bg-gray-100",
+                        : "text-gray-700 hover:bg-gray-100"
                     )}
                   >
                     {label}

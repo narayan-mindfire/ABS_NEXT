@@ -17,7 +17,6 @@ export async function getSlotAction({
 
     return { data: response };
   } catch (error) {
-    console.error("Failed to fetch booked slots:", error);
-    return { error: "Could not fetch booked slots" };
+    return { error: `Could not fetch booked slots ${error}` };
   }
 }

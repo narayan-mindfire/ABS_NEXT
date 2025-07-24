@@ -1,5 +1,3 @@
-import Button from "@/components/generic/Button";
-import DisplayCard from "@/components/others/DisplayCard";
 import Link from "next/link";
 import {
   faCalendarCheck,
@@ -7,6 +5,9 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Button from "@/components/generic/Button";
+import DisplayCard from "@/components/others/DisplayCard";
 
 /**
  * Home page component that displays a welcome message and three feature cards.

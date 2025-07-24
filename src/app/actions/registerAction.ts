@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { FormFields } from "@/types/stateTypes";
 
 interface RegisterResponse {
@@ -21,12 +22,11 @@ export async function registerAction(input: FormFields): Promise<{
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
 
     return { data };
   } catch (err) {
-    console.error("Registration failed:", err);
     throw err;
   }
 }

@@ -7,11 +7,10 @@ export const logoutAction = async () => {
       {},
       {
         withCredentials: true,
-      },
+      }
     );
     localStorage.clear();
   } catch (err) {
-    console.error("Logout failed:", err);
     throw err;
   }
 };

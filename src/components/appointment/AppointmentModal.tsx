@@ -1,15 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Button from "../generic/Button";
-import Input from "../generic/Input";
-import { Slot, slots } from "@/const/const";
-import { isOld } from "@/utils/isOld";
-import Modal from "../generic/Modal";
 import axios from "axios";
+
 import { createAppointmentAction } from "@/app/actions/createAppointmentAction";
 import { updateAppointmentAction } from "@/app/actions/updateAppointmentAction";
 import { getSlotAction } from "@/app/actions/getSlotAction";
 import { getDoctorAction } from "@/app/actions/getDoctorAction";
+import { Slot, slots } from "@/const/const";
+import { isOld } from "@/utils/isOld";
+
+import Button from "../generic/Button";
+import Input from "../generic/Input";
+import Modal from "../generic/Modal";
 
 type Props = {
   onClose: () => void;
@@ -72,7 +74,9 @@ const AppointmentModal: React.FC<Props> = ({
     purpose: initialData?.purpose || "",
     status: initialData?.status || "Pending",
   });
-  const [errors, setErrors] = useState<{ [K in keyof FormState]?: string }>({});
+  const [errors, setErrors] = useState<{ [_K in keyof FormState]?: string }>(
+    {}
+  );
   const [apiError, setApiError] = useState("");
   const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
 
@@ -85,7 +89,7 @@ const AppointmentModal: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -93,7 +97,6 @@ const AppointmentModal: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchBookedSlots = async () => {
-      console.log("fetching booked slots");
       if (!form.doctor_id || !form.slot_date) return;
       try {
         const { data, error } = await getSlotAction({
@@ -103,10 +106,10 @@ const AppointmentModal: React.FC<Props> = ({
         if (data) {
           setBookedSlots(data);
         } else if (error) {
-          console.error(error);
+          throw error;
         }
       } catch (err) {
-        console.error("Failed to fetch booked slots", err);
+        throw err;
       }
     };
 
@@ -117,7 +120,7 @@ const AppointmentModal: React.FC<Props> = ({
     const timeout = setTimeout(() => {
       const query = searchText.toLowerCase();
       const filtered = doctors.filter((doc) =>
-        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query),
+        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query)
       );
       setFilteredDoctors(filtered);
     }, 500);
@@ -126,7 +129,7 @@ const AppointmentModal: React.FC<Props> = ({
   }, [searchText, doctors]);
 
   const validate = () => {
-    const tempErrors: { [K in keyof FormState]?: string } = {};
+    const tempErrors: { [_K in keyof FormState]?: string } = {};
     if (!form.slot_date) tempErrors.slot_date = "Please select a date";
     if (!form.slot_time) tempErrors.slot_time = "Please select a time";
     if (!form.purpose.trim()) tempErrors.purpose = "Purpose is required";

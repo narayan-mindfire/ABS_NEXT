@@ -1,11 +1,12 @@
 "use client";
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState, memo } from "react";
+
+import { sortAppointments } from "@/utils/sortAppointments";
+
+import Button from "../generic/Button";
 import { useAppContext } from "../../context/app.context";
 import type { Appointment } from "../../types/stateTypes";
-import { sortAppointments } from "@/utils/sortAppointments";
 import { useAppointmentActions } from "../../hooks/useAppointmentActions";
-import { memo } from "react";
-import Button from "../generic/Button";
 
 /**
  * TableRow Component
@@ -54,7 +55,7 @@ const TableRow: React.FC<TableRowProps> = memo(
         )}
       </tr>
     );
-  },
+  }
 );
 TableRow.displayName = "TableRow";
 

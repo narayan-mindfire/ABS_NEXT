@@ -8,6 +8,7 @@ import {
   type JSX,
   useCallback,
 } from "react";
+
 import { loadData, saveData } from "../storage/app.storage";
 import type { State } from "../types/stateTypes";
 
@@ -23,7 +24,7 @@ const defaultState: State = {
 
 interface AppContextType {
   state: State;
-  setState: <K extends keyof State>(key: K, value: State[K]) => void;
+  setState: <K extends keyof State>(_key: K, _value: State[K]) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -57,7 +58,7 @@ export function AppProvider({
         return updated;
       });
     },
-    [],
+    []
   );
 
   return (

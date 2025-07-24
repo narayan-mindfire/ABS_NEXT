@@ -1,17 +1,19 @@
 "use client";
-import { useAppContext } from "../context/app.context";
 import { useState, type JSX } from "react";
-import type { Appointment } from "../types/stateTypes";
 import axios from "axios";
 import dynamic from "next/dynamic";
+
 import {
   deleteAppointmentAction,
   getAppointmentsAction,
 } from "@/app/actions/getAppointmentAction";
 
+import { useAppContext } from "../context/app.context";
+import type { Appointment } from "../types/stateTypes";
+
 const AppointmentModal = dynamic(
   () => import("@/components/appointment/AppointmentModal"),
-  { loading: () => <p>Loading form...</p> },
+  { loading: () => <p>Loading form...</p> }
 );
 
 const Modal = dynamic(() => import("@/components/generic/Modal"), {
@@ -43,10 +45,8 @@ export function useAppointmentActions() {
         setModal(null);
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-          console.error("Failed to delete appointment:", error);
           alert("Failed to delete appointment");
         } else {
-          console.error("Unexpected error:", error);
           alert("Something went wrong");
         }
       }
@@ -62,7 +62,7 @@ export function useAppointmentActions() {
         onConfirm={handleConfirm}
         confirmText="Confirm"
         cancelText="Cancel"
-      />,
+      />
     );
   }
 
@@ -73,8 +73,6 @@ export function useAppointmentActions() {
       getAppointmentsAction().then((res) => {
         if (Array.isArray(res)) {
           setState("appointments", res);
-        } else {
-          console.error("Failed to fetch appointments:", res.error);
         }
       });
     };
@@ -91,7 +89,7 @@ export function useAppointmentActions() {
           status: appointment.status,
           doctor: appointment.doctor,
         }}
-      />,
+      />
     );
   }
 
