@@ -6,6 +6,7 @@ import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
 import axiosInstance from "@/app/services/axiosInterceptor";
+import { ToastContainer, toast } from "react-toastify";
 
 type Props = {
   appointments: Appointment[];
@@ -55,9 +56,11 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
             onSuccess={async () => {
               const res = await axiosInstance("/appointments/me");
               setState("appointments", res.data);
+              toast("appointment creation successful", { theme: "dark" });
             }}
           />
         )}
+        <ToastContainer />
       </div>
     </div>
   );

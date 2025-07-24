@@ -7,6 +7,7 @@ import { isOld } from "@/utils/isOld";
 import Modal from "../generic/Modal";
 import axiosInstance from "@/app/services/axiosInterceptor";
 import axios from "axios";
+
 type Props = {
   onClose: () => void;
   onSuccess: () => void;
@@ -82,7 +83,7 @@ const AppointmentModal: React.FC<Props> = ({
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -106,6 +107,18 @@ const AppointmentModal: React.FC<Props> = ({
 
     fetchBookedSlots();
   }, [form.doctor_id, form.slot_date]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const query = searchText.toLowerCase();
+      const filtered = doctors.filter((doc) =>
+        `${doc.first_name} ${doc.last_name}`.toLowerCase().includes(query)
+      );
+      setFilteredDoctors(filtered);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchText, doctors]);
 
   const validate = () => {
     const tempErrors: { [K in keyof FormState]?: string } = {};
@@ -172,32 +185,27 @@ const AppointmentModal: React.FC<Props> = ({
             onChange={(e) => {
               setSearchText(e.target.value);
               setForm((prev) => ({ ...prev, doctor_id: "" }));
-              const query = e.target.value.toLowerCase();
-              const filtered = doctors.filter((doc) =>
-                `${doc.first_name} ${doc.last_name}`
-                  .toLowerCase()
-                  .includes(query),
-              );
-              setFilteredDoctors(filtered);
             }}
           />
-          {filteredDoctors.length > 0 && (
-            <ul className="absolute z-50 w-full bg-white border mt-1 rounded shadow-md max-h-60 overflow-auto">
-              {filteredDoctors.map((doc) => (
-                <li
-                  key={doc._id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setForm((prev) => ({ ...prev, doctor_id: doc._id }));
-                    setSearchText(`Dr. ${doc.first_name} ${doc.last_name}`);
-                    setFilteredDoctors([]);
-                  }}
-                >
-                  Dr. {doc.first_name} {doc.last_name} ({doc.specialization})
-                </li>
-              ))}
-            </ul>
-          )}
+          {!initialData &&
+            searchText.trim() !== "" &&
+            filteredDoctors.length > 0 && (
+              <ul className="absolute z-50 w-full bg-white border mt-1 rounded shadow-md max-h-60 overflow-auto">
+                {filteredDoctors.map((doc) => (
+                  <li
+                    key={doc._id}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setForm((prev) => ({ ...prev, doctor_id: doc._id }));
+                      setSearchText(`Dr. ${doc.first_name} ${doc.last_name}`);
+                      setFilteredDoctors([]);
+                    }}
+                  >
+                    Dr. {doc.first_name} {doc.last_name} ({doc.specialization})
+                  </li>
+                ))}
+              </ul>
+            )}
           {errors.doctor_id && (
             <p className="text-red-500 text-xs mt-1">{errors.doctor_id}</p>
           )}
