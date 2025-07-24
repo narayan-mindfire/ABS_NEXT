@@ -10,9 +10,11 @@ import {
   faUser,
   faGear,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { useAppContext } from "@/context/app.context";
-import Button from "../generic/Button";
 import { logoutAction } from "@/app/actions/logoutAction";
+
+import Button from "../generic/Button";
 
 const UserMenu = () => {
   const [open, setOpen] = useState(false);

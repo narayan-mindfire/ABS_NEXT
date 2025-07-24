@@ -18,7 +18,6 @@ export async function refreshAction(): Promise<{
 
     return { success: res.status >= 200 && res.status < 300 };
   } catch (err) {
-    console.error("Refresh token error:", err);
     throw err;
   }
 }

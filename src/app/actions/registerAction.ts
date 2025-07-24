@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { FormFields } from "@/types/stateTypes";
 
 interface RegisterResponse {
@@ -26,7 +27,6 @@ export async function registerAction(input: FormFields): Promise<{
 
     return { data };
   } catch (err) {
-    console.error("Registration failed:", err);
     throw err;
   }
 }

@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAppContext } from "@/context/app.context";
 import { useRouter } from "next/navigation";
+
+import { useAppContext } from "@/context/app.context";
 import Button from "@/components/generic/Button";
 import Input from "@/components/generic/Input";
 import { loginAction } from "@/app/actions/loginAction";
@@ -57,7 +58,7 @@ const Login = () => {
         }
         router.replace("/dashboard");
       } catch (error) {
-        console.log(error);
+        throw error;
       }
     }
   };

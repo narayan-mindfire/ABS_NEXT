@@ -1,7 +1,7 @@
 "use client";
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 import { refreshAction } from "@/app/actions/refreshAction";
 
 export default function AttemptRefresh({ redirectTo }: { redirectTo: string }) {

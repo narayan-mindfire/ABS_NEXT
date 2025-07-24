@@ -13,7 +13,6 @@ export async function updateUserAction(
     });
     return res;
   } catch (error: unknown) {
-    console.error("update error:", error);
-    return { error: "Update failed" };
+    return { error: `Update failed: ${error}` };
   }
 }

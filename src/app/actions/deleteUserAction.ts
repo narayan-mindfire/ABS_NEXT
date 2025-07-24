@@ -9,6 +9,6 @@ export async function deleteUserAction() {
     });
     return res;
   } catch (error: unknown) {
-    console.error("delete error:", error);
+    return error;
   }
 }

@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import AppointmentModal from "../appointment/AppointmentModal";
+import { ToastContainer, toast } from "react-toastify";
+
+import { getAppointmentsAction } from "@/app/actions/getAppointmentAction";
 import AppointmentList from "@/components/appointment/AppointmetntList";
 import Button from "@/components/generic/Button";
 import { useAppContext } from "@/context/app.context";
 import { Appointment } from "@/types/stateTypes";
-import { ToastContainer, toast } from "react-toastify";
-import { getAppointmentsAction } from "@/app/actions/getAppointmentAction";
+
+import AppointmentModal from "../appointment/AppointmentModal";
 
 type Props = {
   appointments: Appointment[];
@@ -58,7 +60,6 @@ const ClientDashboard = ({ appointments, userType }: Props) => {
                 if (Array.isArray(res)) {
                   setState("appointments", res);
                 } else {
-                  console.error("Failed to fetch appointments:", res.error);
                   toast("appointment creation successful", { theme: "dark" });
                 }
               });

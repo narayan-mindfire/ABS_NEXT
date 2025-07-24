@@ -11,7 +11,6 @@ export const logoutAction = async () => {
     );
     localStorage.clear();
   } catch (err) {
-    console.error("Logout failed:", err);
     throw err;
   }
 };

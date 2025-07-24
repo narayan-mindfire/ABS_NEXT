@@ -10,7 +10,7 @@ interface InputProps {
   type?: string;
   value: string;
   onChange: (
-    e: React.ChangeEvent<
+    _e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => void;

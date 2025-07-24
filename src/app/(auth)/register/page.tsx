@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/components/generic/Input";
-import Button from "@/components/generic/Button";
 import Link from "next/link";
-import { validationService } from "@/utils/validationService";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+
+import Button from "@/components/generic/Button";
+import Input from "@/components/generic/Input";
 import { useAppContext } from "@/context/app.context";
+import { validationService } from "@/utils/validationService";
 import { validationConfig } from "@/const/const";
 import { FormFields } from "@/types/stateTypes";
-import axios from "axios";
 import { registerAction } from "@/app/actions/registerAction";
 
 /**

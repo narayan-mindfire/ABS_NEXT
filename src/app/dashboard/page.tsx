@@ -1,7 +1,9 @@
+import dynamic from "next/dynamic";
+
+import { Appointment, User } from "@/types/stateTypes";
+
 import ClientDashboard from "../../components/dashboard/ClientDashboard";
 import { serverAxios } from "../services/serverAxiosInterceptor";
-import { Appointment, User } from "@/types/stateTypes";
-import dynamic from "next/dynamic";
 
 const AttemptRefresh = dynamic(
   () => import("../../components/utility/AttemptRefresh"),
@@ -27,8 +29,7 @@ const Dashboard = async () => {
         userType={userRes.user_type}
       />
     );
-  } catch (err) {
-    console.log(err);
+  } catch {
     return <AttemptRefresh redirectTo="/dashboard" />;
   }
 };

@@ -18,7 +18,6 @@ export async function createAppointmentAction(
 
     return response;
   } catch (error) {
-    console.error("Create appointment error:", error);
-    return { error: "Failed to create appointment." };
+    return error;
   }
 }

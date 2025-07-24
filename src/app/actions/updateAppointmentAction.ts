@@ -26,7 +26,6 @@ export async function updateAppointmentAction({
 
     return response;
   } catch (error) {
-    console.error("Update appointment error:", error);
-    return { error: "Failed to update appointment." };
+    return { error: `Failed to update appointment.  ${error}` };
   }
 }

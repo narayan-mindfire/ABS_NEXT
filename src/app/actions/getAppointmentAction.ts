@@ -13,8 +13,7 @@ export async function deleteAppointmentAction(
 
     return { success: true };
   } catch (error: unknown) {
-    console.error("Delete appointment error:", error);
-    return { success: false, error: "Failed to delete appointment." };
+    return { success: false, error: `Failed to delete appointment. ${error}` };
   }
 }
 
@@ -28,7 +27,6 @@ export async function getAppointmentsAction(): Promise<
 
     return response;
   } catch (error: unknown) {
-    console.error("Get appointments error:", error);
-    return { error: "Failed to fetch appointments." };
+    return { error: `Failed to fetch appointments., ${error}` };
   }
 }

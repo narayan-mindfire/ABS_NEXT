@@ -1,7 +1,9 @@
-import ClientProfile from "@/components/profile/ClientProfile";
-import { serverAxios } from "@/app/services/serverAxiosInterceptor";
-import { User } from "@/types/stateTypes";
 import dynamic from "next/dynamic";
+
+import { serverAxios } from "@/app/services/serverAxiosInterceptor";
+import ClientProfile from "@/components/profile/ClientProfile";
+import { User } from "@/types/stateTypes";
+
 const AttemptRefresh = dynamic(
   () => import("../../../components/utility/AttemptRefresh"),
   {
@@ -19,8 +21,7 @@ const ProfilePage = async () => {
   try {
     const res = await serverAxios<User>("users/me");
     return <ClientProfile user={res} />;
-  } catch (error: unknown) {
-    console.error("Failed to fetch user profile:", error);
+  } catch {
     return <AttemptRefresh redirectTo="/dashboard/profile" />;
   }
 };

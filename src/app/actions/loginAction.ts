@@ -26,7 +26,6 @@ export async function loginAction(input: LoginInput): Promise<{
 
     return { data: response.data };
   } catch (err) {
-    console.error("Login failed:", err);
     throw err;
   }
 }

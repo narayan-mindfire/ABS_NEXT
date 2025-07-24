@@ -2,22 +2,22 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faPenToSquare,
   faTrash,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import EditProfileForm from "@/components/profile/EditProfileForm";
 import Button from "@/components/generic/Button";
 import { User } from "@/types/stateTypes";
-import ProfileDetails from "./ProfileDetails";
-import dynamic from "next/dynamic";
 import { deleteUserAction } from "@/app/actions/deleteUserAction";
 import { updateUserAction } from "@/app/actions/updateUserAction";
 import { logoutAction } from "@/app/actions/logoutAction";
+
+import ProfileDetails from "./ProfileDetails";
 
 // lazy loading not critical components
 const EditProfileForm = dynamic(
@@ -59,8 +59,7 @@ const ClientProfile = ({ user }: { user: User }) => {
     try {
       await deleteUserAction();
       await logoutAction().then(() => router.replace("/"));
-    } catch (error) {
-      console.log(error);
+    } catch {
     } finally {
       setShowDeleteModal(false);
     }
@@ -77,7 +76,7 @@ const ClientProfile = ({ user }: { user: User }) => {
         alert(res.error);
       }
     } catch (err) {
-      console.error("Failed to update profile", err);
+      throw err;
     }
   };
 
