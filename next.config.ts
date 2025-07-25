@@ -34,8 +34,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-if (process.env.NEXT_OUTPUT === "export") {
-  nextConfig.pageExtensions = ["js", "jsx", "md", "mdx", "ts", "tsx"];
-}
-
 export default nextConfig;
