@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx", "server.ts"],
   async headers() {
     return [
       {
@@ -33,5 +34,9 @@ const nextConfig: NextConfig = {
     ];
   },
 };
+
+if (process.env.NEXT_OUTPUT === "export") {
+  nextConfig.pageExtensions = ["js", "jsx", "md", "mdx", "ts", "tsx"];
+}
 
 export default nextConfig;
